@@ -46,10 +46,6 @@ void main() {
     "---------------------------------------------------------------------",
   );
 
-  print("Digite o nome do item: ");
-  String? adicionarItem = stdin.readLineSync();
-  itens.add(adicionarItem!);
-
   print("Deseja incluir mais itens? Digite: \n1- Sim \n2- Não");
   String? desejaAdicionar = stdin.readLineSync();
   String? opcao;
@@ -60,12 +56,14 @@ void main() {
 
   switch (opcao) {
     case "sim":
-      print("Você escolheu a opção: SIM");
-      while (itens != desejaAdicionar) {
-        print("Então, adicione um item: ");
-        String? adicionarMaisItens = stdin.readLineSync();
-        itens.add(adicionarMaisItens!);
+    int? limiteItens = 1;
+      while (limiteItens < 10) {
+        print("Qual item você deseja adicionar?");
+        String? adicionarItem = stdin.readLineSync();
+        itens.add(adicionarItem!);
+        limiteItens++;
       }
+
       stdin.readLineSync();
     case "nao":
       print("Você escolheu a opção: NÃO");
@@ -75,7 +73,7 @@ void main() {
       print("Nome: ${nome}");
       print("CPF: ${CPF}");
       print("Itens Comprados: ${itens.join("")}");
-      print("Valor total: ${itensValor.join("")}");
+      print("Valor total: ${itensValor}");
       print(
         "---------------------------------------------------------------------",
       );

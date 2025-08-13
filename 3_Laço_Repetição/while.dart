@@ -18,14 +18,13 @@ void main() {
     contador++;
   }
 
-  // Mostrando na prática - Usando o While
-  // print("Digite sua senha: ");
-  // String? senha = stdin.readLineSync();
-  //
-  // while (senha != "1234") {
-  //   print("Senha incorreta, por favor! Insere novamente");
-  //   senha = stdin.readLineSync();
-  // }
+// Mostrando na prática - Usando o While
+print("Digite sua senha: ");
+String? senha = stdin.readLineSync();
+while (senha != "1234") {
+  print("Senha incorreta, por favor! Insere novamente");
+  senha = stdin.readLineSync();
+}
 
   print("Seu nome é BORRACHUDO");
   print("Seu endereço é Rua Paralelo");
