@@ -4,6 +4,7 @@ void main() {
   menu();
   fruits();
   soma(20, 30);
+  soma1(20, 30);
   subtracao(80, 60);
   multiplicacao();
 
