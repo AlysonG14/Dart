@@ -3,17 +3,13 @@
 import "dart:io";
 
 void main() {
-  try {
-    print("Informe o seu nome: ");
-    String? nome = stdin.readLineSync()!;
-    while (nome == null || nome == nome.isEmpty) {
-      print("O nome não pode ser nulo e vazio, tente novamente: ");
-      nome = stdin.readLineSync()!;
-    }
-    print("Nome: ${nome.trim()}");
-  } catch (e) {
-    print("Mensagem de Erro: A string ");
+  print("Informe o seu nome: ");
+  String? nome = stdin.readLineSync()!;
+  while (nome == null || nome == nome.isEmpty) {
+    print("O nome não pode ser nulo e vazio, tente novamente: ");
+    nome = stdin.readLineSync()!;
   }
+  print("Nome: ${nome.trim()}");
 
   try {
     print("Informe o seu CPF: ");
@@ -82,5 +78,54 @@ void main() {
     }
   }
 
+  print(
+    "Escolhe a forma de pagamento \n1- Dinheiro \n2- Débito \n3- Crédito \n4- pix",
+  );
+
+  bool pagamentoValido = false;
+
+  dynamic contadorSoma = 0;
+
+  double? desconto = contadorSoma * 0.10;
+  double? valorDesconto = contadorSoma - desconto;
+
+  double? juros = contadorSoma * 0.10;
+  double? valorJuros = contadorSoma + juros;
+
+  while (!pagamentoValido) {
+    String escolhePagamento = stdin.readLineSync()!;
+
+    switch (escolhePagamento) {
+      case "1":
+        print("Você escolheu a opção: 1- Dinheiro");
+        print("Compra realizada!");
+        print("Você pagou: ${contadorSoma}");
+        pagamentoValido = true;
+        break;
+      case "2":
+        print("Você escolheu a opção: 2- Débito");
+        print("Compra realizada!");
+        print("Você pagou: ${contadorSoma}");
+        pagamentoValido = true;
+        break;
+      case "3":
+        print("Você escolheu a opção: 3- Crédito (com 10% juros em 2x)");
+        print("Compra realizada!");
+        print("Você pagou: ${valorJuros!.toStringAsFixed(2)}");
+        print("No próximo mês, você vai pagar ${valorJuros / 2}");
+        pagamentoValido = true;
+        break;
+      case "4":
+        print("Você escolheu a opção: 4- PIX (com desconto de 10%)");
+        print("Compra realizada!");
+        print("Você pagou: ${valorDesconto!.toStringAsFixed(2)}");
+        pagamentoValido = true;
+        break;
+      default:
+        print("Opção Inválida, escolhe a opção 1, 2, 3, 4");
+    }
+  }
+  print("nome: ${nome}");
+  //print("CPF: ${CPF}");
   print("Carrinho: ${carrinhoUsuario}");
 }
