@@ -1,20 +1,23 @@
-// Avaliação 01 - Construir uma Mercenária
+// Avaliação 01 - Pizzaria
 
 import "dart:io";
 
 void main() {
+  String? nome;
   int? cpf;
   int? quantidade_desejada;
-  int? troco;
   int? opcao;
   int? parcela;
-  double total;
-  double jurosUsuario;
-  double descontoUsuario;
+  double? total;
+  double? jurosUsuario;
+  double? descontoUsuario;
+  double? pagamentoDinheiro;
+  double exibindoDesconto;
+  double exibindoJuros;
 
   print("Digite o seu nome: ");
-  String? nome = stdin.readLineSync()!;
-  while (nome == null || nome.isEmpty) {
+  nome = stdin.readLineSync()!;
+  while (nome == null || nome.trim().isEmpty) {
     print("O nome não pode ser nulo ou vazio. Tente novamente!");
     nome = stdin.readLineSync()!;
   }
@@ -25,7 +28,8 @@ void main() {
     print("Digite o seu cpf: ");
     cpf = int.parse(stdin.readLineSync()!);
     while (cpf == 0) {
-      print("CPF não pode ser nulo ou igual a  0");
+      print("CPF não pode ser igual a 0. Tente novamente!");
+      cpf = int.parse(stdin.readLineSync()!);
     }
     print("CPF: ${cpf}");
   } catch (e) {
@@ -74,7 +78,7 @@ void main() {
           quantidade_desejada = int.parse(stdin.readLineSync()!);
 
           if (quantidade_desejada <= 5) {
-            carrinhoUsuario[0]["quantidade"] = quantidade_desejada;
+            carrinhoUsuario[0]["quantidade"] -= quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -85,7 +89,7 @@ void main() {
           print("Digite a quantidade que voce deseja");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
           if (quantidade_desejada <= 8) {
-            carrinhoUsuario[1]["quantidade"] = quantidade_desejada;
+            carrinhoUsuario[1]["quantidade"] -= quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -96,7 +100,7 @@ void main() {
           print("Digite a quantidade que voce deseja");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
           if (quantidade_desejada <= 3) {
-            carrinhoUsuario[2]["quantidade"] = quantidade_desejada;
+            carrinhoUsuario[2]["quantidade"] -= quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -107,7 +111,7 @@ void main() {
           print("Digite a quantidade que voce deseja");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
           if (quantidade_desejada <= 2) {
-            carrinhoUsuario[3]["quantidade"] = quantidade_desejada;
+            carrinhoUsuario[3]["quantidade"] -= quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -117,15 +121,20 @@ void main() {
           break;
       }
     } catch (e) {
-      print("Erro: Valor Inválido: Apenas valor vlaido é 0: 1");
+      print("Erro: Valor Inválido: Apenas valor valido é 0: 1");
     }
   }
 
-  double subtotal = 0;
 
-  for (int i = 0; i < carrinhoUsuario.length; i++) {
-    subtotal += carrinhoUsuario[i]["quantidade"] * carrinhoUsuario[i]["preco"];
+  double subtotal = 0;
+  
+  // Calculando a subtotal da multiplicação
+
+  for (int multiplicacao = 0; multiplicacao < carrinhoUsuario.length; multiplicacao++) {
+    subtotal += carrinhoUsuario[multiplicacao]["quantidade"] * carrinhoUsuario[multiplicacao]["preco"];
   }
+  
+  
 
   print("Nome: ${nome.trim()}");
   print("CPF: ${cpf}");
@@ -146,28 +155,36 @@ void main() {
       case 1:
         print("Você escolheu a opção: DINHEIRO");
         print("SubTotal: ${subtotal.toStringAsFixed(2)}");
-        total = subtotal;
+        print("Quanto você quer pagar?");
+        pagamentoDinheiro = double.parse(stdin.readLineSync()!);
+        if(pagamentoDinheiro <= subtotal){
+          print("Dinheiro insuficiente, tente novamente mais tarde!");
+        } else {
+          print("Você pagou: ${pagamentoDinheiro.toStringAsFixed(2)}");
+          print("Total: ${subtotal.toStringAsFixed(2)}");
+          print("Você tem o troco de: ${pagamentoDinheiro - subtotal}");
+        }
         break;
       case 2:
-        print("Você escolheu a opção: CARTÃO DE CRÉDITO (com 10% juros)");
+        print("Você escolheu a opção: CARTÃO DE CRÉDITO");
         print("Subtotal: ${subtotal.toStringAsFixed(2)}");
-        print("Digite o desconto:");
+        print("Digite o juros:");
         jurosUsuario = double.parse(stdin.readLineSync()!);
-        double exibindoJuros = calcularJuros(subtotal, jurosUsuario);
+        exibindoJuros = calcularJuros(subtotal, jurosUsuario);
         print("Quantas parcelas você deseja adicionar?");
         parcela = int.parse(stdin.readLineSync()!);
         print("Você parcelou ${parcela}x");
         total = (exibindoJuros / parcela);
-        print("Total com juros: ${total.toStringAsFixed(2)}");
+        print("Total de %${jurosUsuario.toStringAsFixed(2)} juros: ${total.toStringAsFixed(2)}");
         break;
       case 3:
-        print("Você escolhe a opção: CARTÃO DE DÉBITO (com 10% desconto)");
+        print("Você escolhe a opção: CARTÃO DE DÉBITO");
         print("SubTotal: ${subtotal.toStringAsFixed(2)}");
         print("Digite o desconto: ");
         descontoUsuario = double.parse(stdin.readLineSync()!);
-        double exibindoDesconto = calcularDesconto(subtotal, descontoUsuario);
-        total = (exibindoDesconto / subtotal);
-        print("Total com desconto: ${total.toStringAsFixed(2)}");
+        exibindoDesconto = calcularDesconto(subtotal, descontoUsuario);
+        total = (exibindoDesconto);
+        print("Total de %${descontoUsuario.toStringAsFixed(2)} desconto: ${total.toStringAsFixed(2)}");
         break;
       case 4:
         print("Você escolheu a opção: PIX");
@@ -175,25 +192,11 @@ void main() {
         print("Total: ${total.toStringAsFixed(2)}");
         break;
       default:
-        print("Opcao invalida");
+        print("Opcao invalida. Tente novamente!");
     }
     ;
-  } while (opcao <= 1 || opcao >= 5);
-
-  //   if (saborPizzaria[0] == escolheSabor ||
-  //       saborPizzaria[1] == escolheSabor ||
-  //       saborPizzaria[2] == escolheSabor ||
-  //       saborPizzaria[3] == escolheSabor) {
-  //     carrinhoUsuario.add(escolheSabor!);
-  //     print("Produto adicionado ao carrinho!");
-  //     print("Carrinho adicionado: ${carrinhoUsuario}");
-  //     if (quantidadePizzaria[0] == escolheSabor) {
-  //       quantidadePizzaria[0] - escolheSabor;
-  //     }
-  //   } else {
-  //     print("Produto não encontrado");
-  //   }
-  // }
+  } while (opcao <= 0 || opcao >= 5);
+  
 }
 
 // Cálculo de desconto
