@@ -2,7 +2,11 @@
 
 import "dart:io";
 
+/* Esse será a nossa pizzaria */
 void main() {
+
+  /* Criando as variáveis para passar como nulos e usar eles durante o código */
+
   String? nome;
   int? cpf;
   int? quantidade_desejada;
@@ -12,8 +16,11 @@ void main() {
   double? jurosUsuario;
   double? descontoUsuario;
   double? pagamentoDinheiro;
+  double? troco;
   double exibindoDesconto;
   double exibindoJuros;
+
+  /* Transformando o nome, caso se for nulo ou vazio, ele se repetirá até digitar o nome correto */
 
   print("Digite o seu nome: ");
   nome = stdin.readLineSync()!;
@@ -23,6 +30,10 @@ void main() {
   }
 
   print("Nome: ${nome.trim()}");
+
+  /* Transformando a variável cpf, caso se igual a 0, ele se repetirá até digitar o cpf correto. */
+
+  /* Usando o Try catch, caso o usuário digitar como uma String, vai gerar um erro. */
 
   try {
     print("Digite o seu cpf: ");
@@ -35,6 +46,8 @@ void main() {
   } catch (e) {
     print("Erro: O CPF não pode ser igual String");
   }
+  
+  /* Exibindo a lista de Sabor Pizza */
 
   List<String> saborPizzaria = [
     "Requeijao",
@@ -42,13 +55,15 @@ void main() {
     "Calabresa",
     "Chocolate",
   ];
-  List<double> precoPizzaria = [39.99, 59.99, 69.99, 89.99];
-  List<dynamic> quantidadePizzaria = [5, 8, 3, 2];
-  List<dynamic> carrinhoUsuario = [];
+  List<double> precoPizzaria = [39.99, 59.99, 69.99, 89.99]; /* Exibindo a lista preco de Pizza */
+  List<dynamic> quantidadePizzaria = [5, 8, 3, 2]; /* Exibindo a lista de quantidade para Pizza */
+  List<dynamic> carrinhoUsuario = []; /* Exibindo a lista de carriho para o usuário comprar e armazenar a Pizza */
 
   print("--------------------------------");
   print("Bem-vindo a PIZZARIA BRASILEIRA");
   print("--------------------------------");
+  
+  /* Exibindo todos os sabores, com preco e a quantidade */
 
   print("Sabores Disponíveis: ");
 
@@ -58,10 +73,14 @@ void main() {
     {"nome": "Calabresa", "preco": 69.99, "quantidade": 3},
     {"nome": "Chocolate", "preco": 89.99, "quantidade": 2},
   ];
+  
+  /* Imprimindo a lista usando o for in */
 
   for (dynamic sabor in pizzaria) {
     print(sabor);
   }
+  
+  /* Uso do while para quando o usuário escolher o sabor, caso se ele não quiser, ele pode sair digitando a letra 'S'   */
 
   while (true) {
     print("Qual sabor você deseja adicionar? Digite S para sair: ");
@@ -70,15 +89,22 @@ void main() {
         escolheSabor == 's'.toUpperCase()) {
       break;
     }
+    
+    /* Usando o switch case para qual sabor que o cliente irá escolher */
+    
+    /* O usuário digite a quantidade do sabor, quanto ele vai pegar de acordo com o Armazenamento do Estoque */
+    
+    /* Se a quantidade for menor que o cliente irá escolher, o carrinho do cliente será adicionado e ficará armazenado, caso contrário, o estoque é insuficiente */
+    
     try {
       switch (escolheSabor) {
         case "Requeijao":
           carrinhoUsuario.add(pizzaria[0]);
-          print("Digite a quantidade que voce deseja");
+          print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
 
           if (quantidade_desejada <= 5) {
-            carrinhoUsuario[0]["quantidade"] -= quantidade_desejada;
+            carrinhoUsuario[0]["quantidade"] = quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -86,10 +112,10 @@ void main() {
           break;
         case "Mussarela":
           carrinhoUsuario.add(pizzaria[1]);
-          print("Digite a quantidade que voce deseja");
+          print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
           if (quantidade_desejada <= 8) {
-            carrinhoUsuario[1]["quantidade"] -= quantidade_desejada;
+            carrinhoUsuario[1]["quantidade"] = quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -97,10 +123,10 @@ void main() {
           break;
         case "Calabresa":
           carrinhoUsuario.add(pizzaria[2]);
-          print("Digite a quantidade que voce deseja");
+          print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
           if (quantidade_desejada <= 3) {
-            carrinhoUsuario[2]["quantidade"] -= quantidade_desejada;
+            carrinhoUsuario[2]["quantidade"] = quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -108,10 +134,10 @@ void main() {
           break;
         case "Chocolate":
           carrinhoUsuario.add(pizzaria[3]);
-          print("Digite a quantidade que voce deseja");
+          print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
           if (quantidade_desejada <= 2) {
-            carrinhoUsuario[3]["quantidade"] -= quantidade_desejada;
+            carrinhoUsuario[3]["quantidade"] = quantidade_desejada;
           } else {
             print("Estoque insuficiente");
           }
@@ -134,12 +160,14 @@ void main() {
     subtotal += carrinhoUsuario[multiplicacao]["quantidade"] * carrinhoUsuario[multiplicacao]["preco"];
   }
   
-  
+  /* Informações do Cliente: nome, cpf, carrinho e o subtotal */
 
   print("Nome: ${nome.trim()}");
   print("CPF: ${cpf}");
   print("Carrinho: ${carrinhoUsuario}");
   print("Este é o seu valor subtotal: ${subtotal.toStringAsFixed(2)}");
+  
+  /* Cliente escolhe as opcões de pagamento */
 
   do {
     print("Opção de Pagamento:");
@@ -150,6 +178,8 @@ void main() {
 
     print("Digite uma opção");
     opcao = int.parse(stdin.readLineSync()!);
+    
+    /* Case se for DINHEIRO (COM TROCO) */
 
     switch (opcao) {
       case 1:
@@ -162,9 +192,13 @@ void main() {
         } else {
           print("Você pagou: ${pagamentoDinheiro.toStringAsFixed(2)}");
           print("Total: ${subtotal.toStringAsFixed(2)}");
-          print("Você tem o troco de: ${pagamentoDinheiro - subtotal}");
+          troco = pagamentoDinheiro - subtotal;
+          print("Você tem o troco de: ${troco.toStringAsFixed(2)}");
         }
         break;
+        
+    /* Case se for CARTÃO DE CRÉDITO (COM JUROS DEPENDENDO DA COMPRA) */
+        
       case 2:
         print("Você escolheu a opção: CARTÃO DE CRÉDITO");
         print("Subtotal: ${subtotal.toStringAsFixed(2)}");
@@ -177,6 +211,9 @@ void main() {
         total = (exibindoJuros / parcela);
         print("Total de %${jurosUsuario.toStringAsFixed(2)} juros: ${total.toStringAsFixed(2)}");
         break;
+        
+        /* Case se for CARTÃO DE DÉBITO (COM DESCONTO DEPENDENDO DA COMPRA) */
+        
       case 3:
         print("Você escolhe a opção: CARTÃO DE DÉBITO");
         print("SubTotal: ${subtotal.toStringAsFixed(2)}");
@@ -186,6 +223,9 @@ void main() {
         total = (exibindoDesconto);
         print("Total de %${descontoUsuario.toStringAsFixed(2)} desconto: ${total.toStringAsFixed(2)}");
         break;
+        
+        /* Case se for PIX (NORMAL) */
+        
       case 4:
         print("Você escolheu a opção: PIX");
         total = subtotal;
