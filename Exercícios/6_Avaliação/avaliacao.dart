@@ -22,7 +22,8 @@ void main() {
   double exibindoJuros;
 
   /* Transformando o nome, caso se for nulo ou vazio, ele se repetirá até digitar o nome correto */
-
+  do{
+  try{
   print("Digite o seu nome: ");
   nome = stdin.readLineSync()!;
   while (nome == null || nome.trim().isEmpty) {
@@ -39,30 +40,57 @@ void main() {
   try {
     print("Digite o seu cpf: ");
     cpf = int.parse(stdin.readLineSync()!);
-    while (cpf! == 0 || cpf.isNaN || cpf.isNegative) {
-      print("CPF não pode ser igual a 0, nulo ou negativo. Tente novamente!");
+    while (cpf! == 0 || cpf.isNegative) {
+      print("CPF não pode ser igual a 0 ou negativo. Tente novamente!");
       cpf = int.parse(stdin.readLineSync()!);
     }
-    print("CPF: ${cpf}");
   } catch (e) {
-    print("Erro: O CPF não pode ser igual String, tente novamente!");
+      try{
+    do{
+    print("Erro: O CPF não pode ser igual String, digite mais 1 vez!");
+    cpf = int.parse(stdin.readLineSync()!);
+    } while(cpf.isNaN || cpf == '');
+    } catch(e){
+      print("Erro: O CPF não pode ser igual String.");
+    }
+  } finally {
+    print("CPF: ${cpf}");
   }
 
-  /* Transformando o salário */
+  /* Transformando o salário, caso se igual a 0, ele se repetirá até digitar o salário correto. */
 
   /* Usando o try catch para caso o usuário digitar o salário em string */
 
   try {
     print("Digite o seu salário");
     salario = double.parse(stdin.readLineSync()!);
-    if (salario == 0 || salario.isNaN) {
-      print("Você não tem um salário insuficiente! tente novamente mais tarde");
-    } else {
-      print("Salário ${salario.toStringAsFixed(2)}");
+    while (salario! == 0 || salario.isNegative) {
+      print("O salário não pode ser igual a 0 ou negativo, tente novamente!");
+      salario = double.parse(stdin.readLineSync()!);
     }
   } catch (e) {
-    print("Erro: O CPF não pode ser igual String");
+      try{
+    do{
+    print("Erro: O Salário não pode ser igual String. Digite mais 1 vez corretamente!");
+    salario = double.parse(stdin.readLineSync()!);
+    } while(salario.isNaN || salario == '');
+      } catch(e){
+      print("Erro: O Salário não pode ser igual String");
+    }
+  } finally {
+    print("Salário: ${salario}");
   }
+
+  /* Caso o cliente estiver salário nulo ou cpf nulo */
+
+  if(salario == null || cpf == null){
+    print("Você não pode ter salário nulo ou cpf nulo, é apenas número!! volte mais tarde! tente novamente do começo");
+  }
+
+  } catch(e){
+  print("Erro: ${e}");
+  }
+  } while(salario == null || cpf == null);
 
   List<dynamic> carrinhoUsuario = []; /* Exibindo a lista de carriho para o usuário comprar e armazenar a Pizza */
 
@@ -82,6 +110,7 @@ void main() {
   ];
 
   /* Imprimindo a lista usando o for in */
+
 
   for (dynamic sabor in pizzaria) {
     print(sabor);
@@ -109,44 +138,55 @@ void main() {
           carrinhoUsuario.add(pizzaria[0]);
           print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
-          if (quantidade_desejada <= 5) {
+          while(quantidade_desejada! > 5){
+            print("Estoque insuficiente! Tente novamente.");
+            quantidade_desejada = int.parse(stdin.readLineSync()!);
+          };
+          if (quantidade_desejada <= 5 && quantidade_desejada >= 1) {
             print("Produto adicionado ao carrinho!");
 
-            for (int i = 0; i < carrinhoUsuario.length ; i++) {
-              if(carrinhoUsuario[i]["nome"] == "Requeijao"){
-                     carrinhoUsuario[i]["quantidade"] = quantidade_desejada;
+            /* Lógica para pegar a quantidade correta */
+
+            for (int pegarQuantidade = 0; pegarQuantidade < carrinhoUsuario.length ; pegarQuantidade++) {
+              if(carrinhoUsuario[pegarQuantidade]["nome"] == "Requeijao"){
+                     carrinhoUsuario[pegarQuantidade]["quantidade"] = quantidade_desejada;
               }
             }
-
             carrinhoUsuario[0]["quantidade"] = quantidade_desejada;
           } else {
-            print("Estoque insuficiente");
+            print("Você não escolheu a quantidade do produto, tente novamente! mais tarde.");
+            carrinhoUsuario.removeAt(0);
+            break;
           }
         } catch(e){
           print("Erro: ${e}");
         }
 
-          break;
+        break;
         case "Mussarela":
         try{
           carrinhoUsuario.add(pizzaria[1]);
           print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
-          if (quantidade_desejada <= 8) {
+          while(quantidade_desejada! > 8){
+            print("Estoque insuficiente! tente novamente!");
+            quantidade_desejada = int.parse(stdin.readLineSync()!);
+            };
+          if (quantidade_desejada <= 8 && quantidade_desejada >= 1) {
             print("Produto adicionado ao carrinho!");
           
-         
+            /* Lógica para pegar a quantidade correta */
 
-            for (int i = 0; i < carrinhoUsuario.length ; i++) {
-              if(carrinhoUsuario[i]["nome"] == "Mussarela"){
-                     carrinhoUsuario[i]["quantidade"] = quantidade_desejada;
+            for (int pegarQuantidade = 0; pegarQuantidade < carrinhoUsuario.length ; pegarQuantidade++) {
+              if(carrinhoUsuario[pegarQuantidade]["nome"] == "Mussarela"){
+                     carrinhoUsuario[pegarQuantidade]["quantidade"] = quantidade_desejada;
               }
             }
 
-
-
           } else {
-            print("Estoque insuficiente");
+            print("Você não escolheu a quantidade do produto, tente novamente! mais tarde.");
+            carrinhoUsuario.removeAt(0);
+            break;
           }
 
         }catch(e){
@@ -160,18 +200,25 @@ void main() {
           carrinhoUsuario.add(pizzaria[2]);
           print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
-          if (quantidade_desejada <= 3) {
+          while(quantidade_desejada! > 3){
+            print("Estoque insuficiente, tente novamente!");
+            quantidade_desejada = int.parse(stdin.readLineSync()!);
+          };
+          if (quantidade_desejada <= 3 && quantidade_desejada >= 1) {
             print("Produto adicionado ao carrinho!");
 
-            for (int i = 0; i < carrinhoUsuario.length ; i++) {
-              if(carrinhoUsuario[i]["nome"] == "Calabresa"){
-                     carrinhoUsuario[i]["quantidade"] = quantidade_desejada;
+            /* Lógica para pegar a quantidade correta */
+
+            for (int pegarQuantidade = 0; pegarQuantidade < carrinhoUsuario.length ; pegarQuantidade++) {
+              if(carrinhoUsuario[pegarQuantidade]["nome"] == "Calabresa"){
+                     carrinhoUsuario[pegarQuantidade]["quantidade"] = quantidade_desejada;
               }
             }
 
             carrinhoUsuario[2]["quantidade"] = quantidade_desejada;
           } else {
-            print("Estoque insuficiente");
+            print("Você não escolheu a quantidade do produto, tente novamente! mais tarde.!");
+            carrinhoUsuario.removeAt(0);
             break;
           }
         } catch(e){
@@ -184,18 +231,26 @@ void main() {
           carrinhoUsuario.add(pizzaria[3]);
           print("Digite a quantidade que voce deseja: ");
           quantidade_desejada = int.parse(stdin.readLineSync()!);
-          if (quantidade_desejada <= 2) {
+          while(quantidade_desejada! > 2){
+            print("Estoque insuficiente, tente novamente!");
+            quantidade_desejada = int.parse(stdin.readLineSync()!);
+          }
+          if (quantidade_desejada <= 2 && quantidade_desejada >= 1) {
             print("Produto adicionado ao carrinho!");
 
-            for (int i = 0; i < carrinhoUsuario.length ; i++) {
-              if(carrinhoUsuario[i]["nome"] == "Chocolate"){
-                     carrinhoUsuario[i]["quantidade"] = quantidade_desejada;
+            /* Lógica para pegar a quantidade correta */
+
+            for (int pegarQuantidade = 0; pegarQuantidade < carrinhoUsuario.length ; pegarQuantidade++) {
+              if(carrinhoUsuario[pegarQuantidade]["nome"] == "Chocolate"){
+                     carrinhoUsuario[pegarQuantidade]["quantidade"] = quantidade_desejada;
               }
             }
 
             carrinhoUsuario[3]["quantidade"] = quantidade_desejada;
           } else {
-            print("Estoque insuficiente");
+            print("Você não escolheu a quantidade do produto, tente novamente! mais tarde.");
+            carrinhoUsuario.removeAt(0);
+            break;
           }
         }catch(e){
           print('Erro: ${e}');
@@ -217,13 +272,19 @@ void main() {
 
   /* Informações do Cliente: nome, cpf, carrinho e o subtotal */
 
-  print("Nome: ${nome.trim()}");
+  print("Nome: ${nome!.trim()}");
   print("CPF: ${cpf}");
-  print("Salário: ${salario}");
+  print("Salário: ${salario.toStringAsFixed(2)}");
   print("Carrinho: ${carrinhoUsuario}");
   print("Este é o seu valor subtotal: ${subtotal.toStringAsFixed(2)}");
 
   /* Cliente escolhe as opcões de pagamento */
+
+  /* Caso o cliente não adicionar nada */
+
+  if(subtotal < 1){
+    print("Você adicionou NADA, volte mais tarde!");
+  } else {
 
   try{
    do {
@@ -233,14 +294,14 @@ void main() {
     print("3- Cartão de Débito");
     print("4- PIX");
 
-    print("Digite uma opção");
+    print("Digite uma opção: ");
     opcao = int.parse(stdin.readLineSync()!);
 
     /* Case se for DINHEIRO (COM TROCO) */
 
     switch (opcao) {
       case 1:
-        if (salario! <= subtotal) {
+        if (salario <= subtotal) {
           print("Você não tem salário suficiente para realizar o pagamento, por favor! volte mais tarde!",);
         } else {
           print("Você escolheu a opção: DINHEIRO");
@@ -284,15 +345,15 @@ void main() {
           parcela = int.parse(stdin.readLineSync()!);
           print("Você parcelou ${parcela}x");
           total = (exibindoJuros / parcela);
-          print("%${jurosUsuario} de juros, total: ${total.toStringAsFixed(2)}",);
-          salarioAtual = (salario! - total);
+          print("${jurosUsuario.toStringAsFixed(0)}% de juros adicionado, total: ${total.toStringAsFixed(2)}",);
+          salarioAtual = (salario - total);
           print("Seu salário atual: ${salarioAtual.toStringAsFixed(2)}");
         break;
 
       /* Case se for CARTÃO DE DÉBITO (COM DESCONTO DEPENDENDO DA COMPRA) */
 
       case 3:
-        if (salario! <= subtotal) {
+        if (salario <= subtotal) {
           print("Você não tem salário suficiente para realizar o pagamento, por favor! volte mais tarde!",);
         } else {
           print("Você escolheu a opção: CARTÃO DE DÉBITO");
@@ -301,7 +362,7 @@ void main() {
           descontoUsuario = double.parse(stdin.readLineSync()!);
           exibindoDesconto = calcularDesconto(subtotal, descontoUsuario);
           total = (exibindoDesconto);
-          print("%${descontoUsuario} de desconto, total: ${total.toStringAsFixed(2)}",);
+          print("${descontoUsuario.toStringAsFixed(0)}% de desconto adicionado, total: ${total.toStringAsFixed(2)}",);
           salarioAtual = (salario - total);
           print("Seu salário atual: ${salarioAtual.toStringAsFixed(2)}");
         }
@@ -310,7 +371,7 @@ void main() {
       /* Case se for PIX (NORMAL) */
 
       case 4:
-        if (salario! <= subtotal) {
+        if (salario <= subtotal) {
           print("Você não tem salário suficiente para realizar o pagamento, por favor! volte mais tarde!",);
         } else {
           print("Você escolheu a opção: PIX");
@@ -326,8 +387,11 @@ void main() {
     ;
   } while (opcao <= 0 || opcao >= 5);
   } catch(e){
-    print("Erro: Não pode ser String, escolhe as opções com números correspondentes!${e}");
+    print("Erro: Não pode ser String, escolhe as opções com números correspondentes!");
+  } finally{
+    print("Obrigado pela compra! Volte sempre!");
   }
+ }
 }
 
 // Cálculo de desconto
