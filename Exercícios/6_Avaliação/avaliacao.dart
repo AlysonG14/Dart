@@ -267,7 +267,7 @@ void main() {
   // Calculando a subtotal da multiplicação
 
   for (int multiplicacao = 0;multiplicacao < carrinhoUsuario.length;multiplicacao++) {
-      subtotal +=carrinhoUsuario[multiplicacao]["quantidade"] *carrinhoUsuario[multiplicacao]["preco"];
+      subtotal +=carrinhoUsuario[multiplicacao]["quantidade"] * carrinhoUsuario[multiplicacao]["preco"];
   }
 
   /* Informações do Cliente: nome, cpf, carrinho e o subtotal */
