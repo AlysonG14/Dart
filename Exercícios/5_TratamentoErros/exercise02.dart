@@ -5,9 +5,12 @@ import 'dart:io';
 void main() {
   dynamic escolheProduto;
   int? opcaoPagamento;
+  int parcela;
+  double trocoDinheiro;
   double? descontoUsuario;
   double? jurosUsuario;
-  double? parcela;
+  double? trocoRealizado;
+  double? totalParcelado;
   double total;
   double valorCompra;
 
@@ -44,7 +47,9 @@ void main() {
               "O valor não pode ser nulo, igual a 0 e negativo. Tente novamente!",
             );
           }
-          print("Valor ${valorCompra.toStringAsFixed(2)} adicionado ao Hamburguer de Siri");
+          print(
+            "Valor ${valorCompra.toStringAsFixed(2)} adicionado ao Hamburguer de Siri",
+          );
           carrinhoParaGuardarPreco.add(valorCompra);
           cantinaEscolar[0]["preco"] = valorCompra;
         } on FormatException {
@@ -73,7 +78,9 @@ void main() {
             );
             valorCompra = double.parse(stdin.readLineSync()!);
           }
-          print("Valor ${valorCompra.toStringAsFixed(2)} adicionado ao Pão de Queijo");
+          print(
+            "Valor ${valorCompra.toStringAsFixed(2)} adicionado ao Pão de Queijo",
+          );
           carrinhoParaGuardarPreco.add(valorCompra);
           cantinaEscolar[1]["preco"] = valorCompra;
         } on FormatException {
@@ -102,7 +109,9 @@ void main() {
             );
             valorCompra = double.parse(stdin.readLineSync()!);
           }
-          print("Valor ${valorCompra.toStringAsFixed(2)} adicionado ao BIS Chocolate");
+          print(
+            "Valor ${valorCompra.toStringAsFixed(2)} adicionado ao BIS Chocolate",
+          );
           carrinhoParaGuardarPreco.add(valorCompra);
           cantinaEscolar[2]["preco"] = valorCompra;
         } on FormatException {
@@ -139,44 +148,72 @@ void main() {
 
   print("Subtotal: ${subtotal.toStringAsFixed(2)}");
 
+  try {
+    do {
+      print("Opções de Pagamento: ");
+      print('1- Dinheiro');
+      print('2- Cartão de Débito');
+      print('3- Cartão de Crédito');
+      print('4- PIX');
 
+      opcaoPagamento = int.parse(stdin.readLineSync()!);
 
-  do {
-    print("Opções de Pagamento: ");
-    print('1- Dinheiro');
-    print('2- Cartão de Débito');
-    print('3- Cartão de Crédito');
-    print('4- PIX');
-
+      switch (opcaoPagamento) {
+        case 1:
+          print("Você escolheu a opção Dinheiro");
+          print("Total: ${subtotal}");
+          print("Quanto você quer pagar?");
+          trocoDinheiro = double.parse(stdin.readLineSync()!);
+          while (trocoDinheiro < subtotal) {
+            print("Dinheiro insuficiente, tente novamente!");
+            trocoDinheiro = double.parse(stdin.readLineSync()!);
+          }
+          trocoRealizado = trocoDinheiro - subtotal;
+          print("Seu troco: ${trocoRealizado.toStringAsFixed(2)}");
+          break;
+        case 2:
+          print("Você escolheu a opção Cartão de Débito");
+          print("Digite o desconto: ");
+          descontoUsuario = double.parse(stdin.readLineSync()!);
+          total = calcularDesconto(subtotal, descontoUsuario);
+          print(
+            "Total: ${total.toStringAsFixed(2)} com ${descontoUsuario.toStringAsFixed(0)}% desconto",
+          );
+          break;
+        case 3:
+          print("Você escolheu a opção Cartão de Crédito");
+          print("Digite o juros: ");
+          jurosUsuario = double.parse(stdin.readLineSync()!);
+          print("Quantos parcela você quer parcelar?");
+          parcela = int.parse(stdin.readLineSync()!);
+          total = calcularJuros(subtotal, jurosUsuario);
+          totalParcelado = total / parcela;
+          print(
+            "Total: ${totalParcelado.toStringAsFixed(2)} com ${jurosUsuario.toStringAsFixed(0)}% juros, parcelado ${parcela}x",
+          );
+          break;
+        case 4:
+          print("Você escolheu a opção PIX");
+          print("Total: ${subtotal.toStringAsFixed(2)}");
+          break;
+        default:
+          print("Opção inválida, digite apenas as opções 1,2,3 e 4");
+      }
+    } while (opcaoPagamento > 5 || opcaoPagamento < 1);
+  } on FormatException {
+    try{
+    print(
+      "Erro, não pode converter número em String!. Tente novamente mais uma vez",
+    );
+  }catch(e){
+    print("Ocorreu um erro inesperado! ${e}");
+  } 
     opcaoPagamento = int.parse(stdin.readLineSync()!);
-
-    switch (opcaoPagamento) {
-      case 1:
-        print("Você escolheu a opção Dinheiro");
-        print("Total: ${subtotal}");
-        break;
-      case 2:
-        print("Você escolheu a opção Cartão de Débito");
-        print("Digite o desconto: ");
-        descontoUsuario = double.parse(stdin.readLineSync()!);
-        total = calcularDesconto(subtotal, descontoUsuario);
-        print("Total: ${total} com ${descontoUsuario.toStringAsFixed(0)}% desconto");
-        break;
-      case 3:
-        print("Você escolheu a opção Cartão de Crédito");
-        print("Digite o juros: ");
-        jurosUsuario = double.parse(stdin.readLineSync()!);
-        total = calcularJuros(subtotal, jurosUsuario);
-        print("Total: ${total / parcela!} com ${jurosUsuario.toStringAsFixed(0)}% juros, parcelado ${parcela}");
-        break;
-      case 4:
-        print("Você escolheu a opção PIX");
-        print("Total: ${subtotal}");
-        break;
-      default:
-        print("Opção inválida, digite apenas as opções 1,2,3 e 4");
-    }
-  } while (opcaoPagamento > 5 || opcaoPagamento < 1);
+  } catch (err) {
+    print("Erro: ${err}");
+  } finally {
+    print("Obrigado, volte sempre!");
+  }
 }
 
 dynamic calcularDesconto(double preco, double percentual) {
