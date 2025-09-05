@@ -9,7 +9,7 @@ void main() {
     // FormatException -> Se der erro, me mostre.
     print("ONLY AGE!");
   } on RangeError {
-    // RangeError ->
+    // RangeError -> quando um valor numérico ou outro tipo de dado é passado para uma função que espera um valor dentro de um intervalo específico, mas o valor fornecido está fora desse intervalo permitido.
     print("Erro de range");
   } catch (e) {
     // catch -> Mostra o erro.
