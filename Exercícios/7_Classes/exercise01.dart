@@ -9,7 +9,7 @@ class Animal{
   Animal({required this.nome, required this.idade});
 
   void fazerSom(){
-    print('');
+    print('Fazer som de cada animal diferente!');
   }
     
 }
@@ -20,6 +20,7 @@ class Cachorro extends Animal{
   Cachorro({required String nome, required int idade, String? raca})
   :super(nome: nome, idade: idade);
 
+  @override
   void fazerSom(){
     print('Au Au');
   }
@@ -31,6 +32,7 @@ class Gato extends Animal{
   Gato({required String nome, required int idade, String? cor})
   :super(nome: nome, idade: idade);
 
+  @override
   void fazerSom(){
     print("Miau");
   }
