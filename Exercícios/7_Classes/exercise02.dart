@@ -21,16 +21,17 @@ class Conta {
 }
 
 class ContaCorrente extends Conta {
-  double? limite_cheque;
-  ContaCorrente({
-    required String nome_titular,
-    required double saldoInicial,
-    double? this.limite_cheque,
-  }) : super(nome_titular: nome_titular, saldoInicial: saldoInicial);
+  List<Map<String, double>> limite_cheque = [
+    {'limite1': 200.00},
+    {'limite2': 500.00},
+    {'limite3': 800.00},
+    {'limite4': 1000.00},
+  ];
+  ContaCorrente({required String nome_titular, required double saldoInicial})
+    : super(nome_titular: nome_titular, saldoInicial: saldoInicial);
 
   @override
   void informacoesCandidato() {
-    print('---------------------------------------------------');
     print('Nome Titular: ${nome_titular}');
     print('Saldo Atual: ${saldoInicial.toStringAsFixed(2)}');
     if (investimento == null ||
@@ -45,13 +46,50 @@ class ContaCorrente extends Conta {
   }
 
   void limiteCheque() {
-    print('Deseja colocar limite de cheque para o ${nome_titular}?');
-    limite_cheque = double.parse(stdin.readLineSync()!);
-    if (limite_cheque == 'S'.toLowerCase() ||
-        limite_cheque == 's'.toUpperCase()) {
-      print('Você digitou S para sair');
-    } else {
-      print('Limite: ${limite_cheque}');
+    String entradaLimite;
+    dynamic adicionarLimite;
+    while (true) {
+      print(
+        'Deseja colocar limite de cheque para o ${nome_titular}? \nDigite as opções: \n1- Sim \n2- Não',
+      );
+      entradaLimite = stdin.readLineSync()!;
+      if (entradaLimite == 'Não' || entradaLimite == '2') {
+        print('Você digitou NÃO. A conta ${nome_titular} não tem limites!');
+        print('---------------------------------------------------');
+        break;
+      } else if (entradaLimite == 'Sim' || entradaLimite == '1') {
+        print('Limites: ');
+        limite_cheque.forEach((limite) => print(limite));
+        print('Qual limite, você vai adicionar? Tem essas opções:');
+        adicionarLimite = stdin.readLineSync()!;
+        do{
+        switch (limite_cheque) {
+          case 200.00:
+            limite_cheque.add(adicionarLimite['limite'][0]);
+            print('Limite adicionado para ${nome_titular}');
+            print('Limite ${limite_cheque}');
+            break;
+          case 500.00:
+            limite_cheque.add(adicionarLimite['limite'][1]);
+            print('Limite adicionado para ${nome_titular}');
+            print('Limite ${limite_cheque}');
+            break;
+          case 800.00:
+            limite_cheque.add(adicionarLimite['limite'][2]);
+            print('Limite adicionado para ${nome_titular}');
+            print('Limite ${limite_cheque}');
+            break;
+          case 1000.00:
+            limite_cheque.add(adicionarLimite['limite'][3]);
+            print('Limite adicionado para ${nome_titular}');
+            print('Limite ${limite_cheque}');
+            break;
+          default:
+            print('Opção Inválido! Tente novamente!');
+        }
+      }while(limite_cheque != 'limite1' || limite_cheque != 'limite2' || limite_cheque != 'limite3' || limite_cheque != 'limite4');
+        break;
+      }
     }
   }
 }
@@ -87,10 +125,10 @@ void main() {
   );
 
   candidato1.informacoesCandidato();
-  candidato1.limiteCheque();
   candidato2.informacoesCandidato();
-  candidato2.limiteCheque();
   candidato3.informacoesCandidato();
+  candidato1.limiteCheque();
+  candidato2.limiteCheque();
   candidato3.limiteCheque();
 
   // while (true) {
@@ -133,8 +171,8 @@ void main() {
   // }
 }
 
-dynamic percentual(double saldo, percentual) {
-  double porcentagem = saldo * (percentual / 100);
-  double calcularPorcentagem = porcentagem;
-  return calcularPorcentagem;
-}
+// dynamic percentual(double saldo, percentual) {
+//   double porcentagem = saldo * (percentual / 100);
+//   double calcularPorcentagem = porcentagem;
+//   return calcularPorcentagem;
+// }
