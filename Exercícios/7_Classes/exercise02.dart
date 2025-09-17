@@ -62,32 +62,35 @@ class ContaCorrente extends Conta {
         limite_cheque.forEach((limite) => print(limite));
         print('Qual limite, você vai adicionar? Tem essas opções:');
         adicionarLimite = stdin.readLineSync()!;
-        do{
-        switch (limite_cheque) {
-          case 200.00:
-            limite_cheque.add(adicionarLimite['limite'][0]);
-            print('Limite adicionado para ${nome_titular}');
-            print('Limite ${limite_cheque}');
-            break;
-          case 500.00:
-            limite_cheque.add(adicionarLimite['limite'][1]);
-            print('Limite adicionado para ${nome_titular}');
-            print('Limite ${limite_cheque}');
-            break;
-          case 800.00:
-            limite_cheque.add(adicionarLimite['limite'][2]);
-            print('Limite adicionado para ${nome_titular}');
-            print('Limite ${limite_cheque}');
-            break;
-          case 1000.00:
-            limite_cheque.add(adicionarLimite['limite'][3]);
-            print('Limite adicionado para ${nome_titular}');
-            print('Limite ${limite_cheque}');
-            break;
-          default:
-            print('Opção Inválido! Tente novamente!');
-        }
-      }while(limite_cheque != 'limite1' || limite_cheque != 'limite2' || limite_cheque != 'limite3' || limite_cheque != 'limite4');
+        do {
+          switch (limite_cheque) {
+            case 200.00:
+              limite_cheque.add(adicionarLimite['limite'][0]);
+              print('Limite adicionado para ${nome_titular}');
+              print('Limite ${limite_cheque}');
+              break;
+            case 500.00:
+              limite_cheque.add(adicionarLimite['limite'][1]);
+              print('Limite adicionado para ${nome_titular}');
+              print('Limite ${limite_cheque}');
+              break;
+            case 800.00:
+              limite_cheque.add(adicionarLimite['limite'][2]);
+              print('Limite adicionado para ${nome_titular}');
+              print('Limite ${limite_cheque}');
+              break;
+            case 1000.00:
+              limite_cheque.add(adicionarLimite['limite'][3]);
+              print('Limite adicionado para ${nome_titular}');
+              print('Limite ${limite_cheque}');
+              break;
+            default:
+              print('Opção Inválido! Tente novamente!');
+          }
+        } while (limite_cheque != 'limite1' ||
+            limite_cheque != 'limite2' ||
+            limite_cheque != 'limite3' ||
+            limite_cheque != 'limite4');
         break;
       }
     }
