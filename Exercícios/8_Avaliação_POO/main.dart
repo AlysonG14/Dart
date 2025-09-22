@@ -18,9 +18,12 @@ void main() {
   print('Animais cadastrados:');
   Leao Mufasa = new Leao(
     nome: "Mufasa",
+    tipoAnimal: 'Leão',
     cor: 'Amarelo/Laranja',
     idade: 15,
     especie: 'Felino',
+    possuiDoenca: 'Deformidade na pata',
+    porte: 'Grande',
   );
 
   Mufasa.exibirInformacoes();
@@ -29,11 +32,18 @@ void main() {
 
   Mufasa.alimentacao();
 
+  Mufasa.doenca();
+
+  Mufasa.porteAnimal();
+
   Macaco Marcel = new Macaco(
     nome: 'Marcel',
+    tipoAnimal: 'Macaco',
     cor: 'Preto/Branco',
     idade: 3,
     especie: 'Mamífero',
+    possuiDoenca: 'Febre',
+    porte: 'Médio'
   );
 
   Marcel.exibirInformacoes();
@@ -42,11 +52,18 @@ void main() {
 
   Marcel.alimentacao();
 
+  Marcel.doenca();
+
+  Marcel.porteAnimal();
+
   Gato Tom = new Gato(
     nome: 'Tom',
+    tipoAnimal: 'Gato',
     cor: 'Azul/Branco',
     idade: 5,
     especie: 'Felino',
+    possuiDoenca: 'Nenhum',
+    porte: 'Pequeno'
   );
 
   Tom.exibirInformacoes();
@@ -54,6 +71,10 @@ void main() {
   Tom.exibirSom();
 
   Tom.alimentacao();
+
+  Tom.doenca();
+
+  Tom.porteAnimal();
 
   while (true) {
     print('Escolhe as opções');
@@ -83,20 +104,23 @@ void main() {
               print('Digite o nome: ');
               nomeAnimal = stdin.readLineSync()!;
               cadastramentoLeao.add(nomeAnimal);
-              cadastroAnimalCompleto[0]['nome'] += cadastramentoLeao;
+              cadastroAnimalCompleto[0]['nome'] = cadastramentoLeao;
+
               print('Digite a idade: ');
               idadeAnimal = int.parse(stdin.readLineSync()!);
               cadastramentoLeao.add(idadeAnimal);
-              cadastroAnimalCompleto[0]['idade'] += cadastramentoLeao;
+              cadastroAnimalCompleto[0]['idade'] = cadastramentoLeao;
+
               print('Digite a cor: ');
               corAnimal = stdin.readLineSync()!;
               cadastramentoLeao.add(corAnimal);
-              cadastroAnimalCompleto[0]['cor'] += cadastramentoLeao;
+              cadastroAnimalCompleto[0]['cor'] = cadastramentoLeao;
+
               print('Cadastramento completo.');
 
               for(dynamic cadastroCompleto = 0; cadastroCompleto < cadastroAnimalCompleto.length; cadastroCompleto++){
                 cadastroCompleto = [nomeAnimal] + [idadeAnimal.toString()] + [corAnimal]; 
-                print("${cadastroCompleto} Cadastrado.");
+                print("${cadastramentoLeao} Cadastrado.");
               }
 
               break;
@@ -105,14 +129,17 @@ void main() {
               nomeAnimal = stdin.readLineSync()!;
               cadastramentoMacaco.add(nomeAnimal);
               cadastroAnimalCompleto[1]['nome'] += cadastramentoMacaco;
+
               print('Digite a idade: ');
               idadeAnimal = int.parse(stdin.readLineSync()!);
               cadastramentoMacaco.add(idadeAnimal);
               cadastroAnimalCompleto[1]['idade'] += cadastramentoMacaco;
+
               print('Digite a cor: ');
               corAnimal = stdin.readLineSync()!;
               cadastramentoMacaco.add(corAnimal);
               cadastroAnimalCompleto[1]['cor'] += cadastramentoMacaco;
+              
               print('Cadastramento completo.');
 
               for(dynamic cadastroCompleto = 0; cadastroCompleto < cadastroAnimalCompleto.length; cadastroCompleto++){
@@ -127,14 +154,17 @@ void main() {
               nomeAnimal = stdin.readLineSync()!;
               cadastramentoGato.add(nomeAnimal);
               cadastroAnimalCompleto[0]['nome'] += cadastramentoGato;
+
               print('Digite a idade');
               idadeAnimal = int.parse(stdin.readLineSync()!);
               cadastramentoGato.add(idadeAnimal);
               cadastroAnimalCompleto[0]['idade'] += cadastramentoGato;
+
               print('Digite a cor');
               corAnimal = stdin.readLineSync()!;
               cadastramentoGato.add(corAnimal);
               cadastroAnimalCompleto[0]['cor'] += cadastramentoGato;
+
               print('Cadastramento completo.');
 
               for(dynamic cadastroCompleto = 0; cadastroCompleto < cadastroAnimalCompleto.length; cadastroCompleto++){
@@ -147,24 +177,73 @@ void main() {
               print('Opção Inválido! Escolhe corretamente as opções 1, 2 e 3');
           }
         case 2:
-          print('Escolhe qual animal você deseja listar?');
-          print('Leão');
-          print('Macaco');
-          print('Gato');
+          print('Escolhe qual animal você deseja listar? (Digite S para voltar)');
+          print('1- Leao');
+          print('2- Macaco');
+          print('3- Gato');
           entradaAnimal = stdin.readLineSync()!;
           switch(entradaAnimal){
             case 'Leao':
 
+            print('--------------------------------');
+
+            Mufasa.exibirInformacoes();
+
+            Mufasa.exibirSom();
+
+            Mufasa.alimentacao();
+
+            Mufasa.doenca();
+
+            Mufasa.porteAnimal();
+
             for(dynamic cadastro in cadastroAnimalCompleto){
               cadastro = cadastramentoLeao;
+              print(cadastro);
+            }
+            
+            break;
+
+            case 'Macaco':
+
+            print('--------------------------------');
+
+            Marcel.exibirInformacoes();
+
+            Marcel.exibirSom();
+
+            Marcel.alimentacao();
+
+            Marcel.doenca();
+
+            Marcel.porteAnimal();
+
+            for(dynamic cadastro in cadastroAnimalCompleto){
+              cadastro = cadastramentoMacaco;
+              print(cadastro);
             }
 
             break;
 
-            case 'Macaco':
-            break;
-
             case 'Gato':
+
+            print('--------------------------------');
+
+            Tom.exibirInformacoes();
+
+            Tom.exibirSom();
+
+            Tom.alimentacao();
+
+            Tom.doenca();
+
+            Tom.porteAnimal();
+
+            for(dynamic cadastro in cadastroAnimalCompleto){
+              cadastro = cadastramentoGato;
+              print(cadastro);
+            }
+
             break;
           }
           break;
