@@ -63,23 +63,23 @@ class ContaCorrente extends Conta {
         print('Qual limite, você vai adicionar? Tem essas opções:');
         adicionarLimite = stdin.readLineSync()!;
         do {
-          switch (limite_cheque) {
-            case 200.00:
+          switch (adicionarLimite) {
+            case 'limite1':
               limite_cheque.add(adicionarLimite['limite'][0]);
               print('Limite adicionado para ${nome_titular}');
               print('Limite ${limite_cheque}');
               break;
-            case 500.00:
+            case 'limite2':
               limite_cheque.add(adicionarLimite['limite'][1]);
               print('Limite adicionado para ${nome_titular}');
               print('Limite ${limite_cheque}');
               break;
-            case 800.00:
+            case 'limite3':
               limite_cheque.add(adicionarLimite['limite'][2]);
               print('Limite adicionado para ${nome_titular}');
               print('Limite ${limite_cheque}');
               break;
-            case 1000.00:
+            case 'limite4':
               limite_cheque.add(adicionarLimite['limite'][3]);
               print('Limite adicionado para ${nome_titular}');
               print('Limite ${limite_cheque}');
@@ -93,6 +93,7 @@ class ContaCorrente extends Conta {
             limite_cheque != 'limite4');
         break;
       }
+      break;
     }
   }
 }
