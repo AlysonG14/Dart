@@ -1,4 +1,4 @@
-// Exercise 02 - Conta
+// Exercise 02 - Conta do Candidato
 
 import 'dart:io';
 
@@ -13,170 +13,110 @@ class Conta {
     this.investimento,
   });
 
-  void informacoesCandidato() {
-    print('Esse vai ser o Nome Titular (obrigatório)');
-    print('Esse vai ser o Saldo do Candidato (obrigatório):');
-    print('Esse vai ser o Investimento do Candidato (opcional):');
+  void informacoes() {
+    print('Nome Titular: Aqui vai ser o nome do candidato');
+    print('Saldo Inicial: Aqui vai ser o saldo atual do candidato');
+    print('Investimento: Aqui vai ser o investimento da pessoa');
   }
 }
 
 class ContaCorrente extends Conta {
-  List<Map<String, double>> limite_cheque = [
-    {'limite1': 200.00},
-    {'limite2': 500.00},
-    {'limite3': 800.00},
-    {'limite4': 1000.00},
-  ];
-  ContaCorrente({required String nome_titular, required double saldoInicial})
-    : super(nome_titular: nome_titular, saldoInicial: saldoInicial);
+  double? limite_cheque;
+
+  ContaCorrente({
+    required String nome_titular,
+    required double saldoInicial,
+    double? limite_cheque,
+  }) : super(nome_titular: nome_titular, saldoInicial: saldoInicial);
 
   @override
-  void informacoesCandidato() {
-    print('Nome Titular: ${nome_titular}');
-    print('Saldo Atual: ${saldoInicial.toStringAsFixed(2)}');
-    if (investimento == null ||
-        investimento!.isNaN ||
-        investimento!.isNegative) {
-      print('Não existe investimento nesse candidato');
-      print('---------------------------------------------------');
+  void informacoes() {
+    print('Nome titular: ${nome_titular}');
+    print('Saldo Inicial: ${saldoInicial.toStringAsFixed(2)}');
+    if (investimento == null) {
+      print('Não existe investimento para essa pessoa!');
+      print('----------------------------------------------');
     } else {
-      print('Investimento ${investimento!.toStringAsFixed(2)}');
-      print('---------------------------------------------------');
+      print('Investimento: ${investimento!.toStringAsFixed(2)}');
+      print('----------------------------------------------');
     }
   }
 
-  void limiteCheque() {
-    String entradaLimite;
-    dynamic adicionarLimite;
+  void limite() {
     while (true) {
-      print(
-        'Deseja colocar limite de cheque para o ${nome_titular}? \nDigite as opções: \n1- Sim \n2- Não',
-      );
-      entradaLimite = stdin.readLineSync()!;
-      if (entradaLimite == 'Não' || entradaLimite == '2') {
-        print('Você digitou NÃO. A conta ${nome_titular} não tem limites!');
-        print('---------------------------------------------------');
+      print('Deseja aplicar o limite de cheque para ${nome_titular}? \nDigite as opções: \n1- sim \n2- nao');
+      String aplicarLimite = stdin.readLineSync()!;
+      if(aplicarLimite == 'sim'.toLowerCase() || aplicarLimite == 'sim'.toUpperCase()){
+        print('Quantos? ');
+        limite_cheque = double.parse(stdin.readLineSync()!);
+        while(limite_cheque!.isNaN || limite_cheque == 0 || limite_cheque!.isNegative){
+          print('Aplicação de Limite errada, tente novamente!');
+          limite_cheque = double.parse(stdin.readLineSync()!);
+        }
+        print('Limite: ${limite_cheque!.toStringAsFixed(2)}');
+        print('----------------------------------------------');
         break;
-      } else if (entradaLimite == 'Sim' || entradaLimite == '1') {
-        print('Limites: ');
-        limite_cheque.forEach((limite) => print(limite));
-        print('Qual limite, você vai adicionar? Tem essas opções:');
-        adicionarLimite = stdin.readLineSync()!;
-        do {
-          switch (adicionarLimite) {
-            case 'limite1':
-              limite_cheque.add(adicionarLimite['limite'][0]);
-              print('Limite adicionado para ${nome_titular}');
-              print('Limite ${limite_cheque}');
-              break;
-            case 'limite2':
-              limite_cheque.add(adicionarLimite['limite'][1]);
-              print('Limite adicionado para ${nome_titular}');
-              print('Limite ${limite_cheque}');
-              break;
-            case 'limite3':
-              limite_cheque.add(adicionarLimite['limite'][2]);
-              print('Limite adicionado para ${nome_titular}');
-              print('Limite ${limite_cheque}');
-              break;
-            case 'limite4':
-              limite_cheque.add(adicionarLimite['limite'][3]);
-              print('Limite adicionado para ${nome_titular}');
-              print('Limite ${limite_cheque}');
-              break;
-            default:
-              print('Opção Inválido! Tente novamente!');
-          }
-        } while (limite_cheque != 'limite1' ||
-            limite_cheque != 'limite2' ||
-            limite_cheque != 'limite3' ||
-            limite_cheque != 'limite4');
+      } else if(aplicarLimite == 'nao'.toLowerCase() || aplicarLimite == 'nao'.toUpperCase()) {
+        print('Nenhum limite aplicado!');
+        print('----------------------------------------------');
         break;
-      }
-      break;
+      };
     }
   }
 }
 
-class ContaPoupanca extends Conta {
-  double taxaRendimento;
-  ContaPoupanca({
-    required String nome_titular,
-    required double saldoInicial,
-    required double this.taxaRendimento,
-  }) : super(nome_titular: nome_titular, saldoInicial: saldoInicial);
+class ContaPoupanca extends Conta{
+  double taxaRendimento = 0;
+  ContaPoupanca({required String nome_titular, required double saldoInicial, required taxaRendimento})
+  :super(nome_titular: nome_titular, saldoInicial: saldoInicial);
 
-  void atualizaSaldo(int taxa) {}
+  @override
+  void informacoes() {
+    print('Nome titular: ${nome_titular}');
+    print('Saldo Inicial: ${saldoInicial.toStringAsFixed(2)}');
+    if (investimento == null) {
+      print('Não existe investimento para essa pessoa!');
+      print('----------------------------------------------');
+    } else {
+      print('Investimento: ${investimento!.toStringAsFixed(2)}');
+      print('----------------------------------------------');
+    }
+  }
+
+  set aplicarTaxa(int novoSaldoAtualizado){
+
+    
+  }
+
+
 }
 
 void main() {
-  // String entradaCheque;
-  // int opcaoCandidatos;
-  // double cheque;
-  // dynamic adicionandoCheque;
+  ContaCorrente corrente1 = new ContaCorrente(nome_titular: 'Leandro', saldoInicial: 4000.00);
+  ContaCorrente corrente2 = new ContaCorrente(nome_titular: 'Miguel', saldoInicial: 10000.00);
+  ContaCorrente corrente3 = new ContaCorrente(nome_titular: 'Murilo', saldoInicial: 16000.00);
 
-  ContaCorrente candidato1 = new ContaCorrente(
-    nome_titular: 'Murilo',
-    saldoInicial: 2000.00,
-  );
-  ContaCorrente candidato2 = new ContaCorrente(
-    nome_titular: 'David',
-    saldoInicial: 1800.00,
-  );
-  ContaCorrente candidato3 = new ContaCorrente(
-    nome_titular: 'Rafael',
-    saldoInicial: 2200.00,
-  );
+  print('Conta Corrente:');
+  print('----------------------------------------------');
 
-  candidato1.informacoesCandidato();
-  candidato2.informacoesCandidato();
-  candidato3.informacoesCandidato();
-  candidato1.limiteCheque();
-  candidato2.limiteCheque();
-  candidato3.limiteCheque();
+  corrente1.informacoes();
+  corrente1.limite();
+  corrente2.informacoes();
+  corrente2.limite();
+  corrente3.informacoes();
+  corrente3.limite();
 
-  // while (true) {
-  //   print(
-  //     'Deseja colocar limite de cheque dos candidatos? \nEscolhe uma opção: \n1- sim \n2- não',
-  //   );
-  //   entradaCheque = stdin.readLineSync()!;
-  //   if (entradaCheque == '2') {
-  //     print('Escolheu a opção NÃO.');
-  //     break;
-  //   } else if (entradaCheque == '1') {
-  //     do {
-  //       print('Candidatos Presentes:');
-  //       print('1- ${candidato1.nome_titular}');
-  //       print('2- ${candidato2.nome_titular}');
-  //       print('3- ${candidato3.nome_titular}');
-  //       opcaoCandidatos = int.parse(stdin.readLineSync()!);
-  //     } while (opcaoCandidatos < 1 || opcaoCandidatos > 3);
+  ContaPoupanca poupanca1 = new ContaPoupanca(nome_titular: 'Douglas', saldoInicial: 1800.00, taxaRendimento: 100.00);
+  ContaPoupanca poupanca2 = new ContaPoupanca(nome_titular: 'Douglas', saldoInicial: 1800.00, taxaRendimento: 200.00);
+  ContaPoupanca poupanca3 = new ContaPoupanca(nome_titular: 'Douglas', saldoInicial: 1800.00, taxaRendimento: 300.00);
   //
-  //     switch (entradaCheque) {
-  //       case '1':
-  //         print(
-  //           'Qual limite de Cheque, você vai colocar no ${candidato1.nome_titular}?',
-  //         );
-  //         cheque = double.parse(stdin.readLineSync()!);
-  //         adicionandoCheque = candidato1.limite_cheque;
-  //         candidato1.informacoesCandidato();
-  //         print('Limite: ${candidato1.limite_cheque}');
-  //         break;
-  //       case '2':
-  //         candidato2.informacoesCandidato();
-  //         break;
-  //       case '3':
-  //         candidato3.informacoesCandidato();
-  //         break;
-  //       default:
-  //         print('Opção Inválido! Escolhe a opção correta! 1 à 3');
-  //     }
-  //   }
-  // }
-}
+  //
 
-// dynamic percentual(double saldo, percentual) {
-//   double porcentagem = saldo * (percentual / 100);
-//   double calcularPorcentagem = porcentagem;
-//   return calcularPorcentagem;
-// }
+  print('Conta Poupança:');
+  print('----------------------------------------------');
+
+  poupanca1.informacoes();
+  poupanca2.informacoes();
+  poupanca3.informacoes();
+
+}
