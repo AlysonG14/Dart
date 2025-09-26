@@ -26,8 +26,13 @@ class ContaCorrente extends Conta {
   ContaCorrente({
     required String nome_titular,
     required double saldoInicial,
+    double? investimento,
     double? limite_cheque,
-  }) : super(nome_titular: nome_titular, saldoInicial: saldoInicial);
+  }) : super(
+         nome_titular: nome_titular,
+         saldoInicial: saldoInicial,
+         investimento: investimento,
+       );
 
   @override
   void informacoes() {
@@ -44,31 +49,42 @@ class ContaCorrente extends Conta {
 
   void limite() {
     while (true) {
-      print('Deseja aplicar o limite de cheque para ${nome_titular}? \nDigite as opções: \n1- sim \n2- nao');
+      print(
+        'Deseja aplicar o limite de cheque para ${nome_titular}? \nDigite as opções: \n1- sim \n2- nao',
+      );
       String aplicarLimite = stdin.readLineSync()!;
-      if(aplicarLimite == 'sim'.toLowerCase() || aplicarLimite == 'sim'.toUpperCase()){
+      if (aplicarLimite == 'sim'.toLowerCase() ||
+          aplicarLimite == 'sim'.toUpperCase()) {
         print('Quantos? ');
         limite_cheque = double.parse(stdin.readLineSync()!);
-        while(limite_cheque!.isNaN || limite_cheque == 0 || limite_cheque!.isNegative){
+        while (limite_cheque!.isNaN ||
+            limite_cheque == 0 ||
+            limite_cheque!.isNegative) {
           print('Aplicação de Limite errada, tente novamente!');
           limite_cheque = double.parse(stdin.readLineSync()!);
         }
         print('Limite: ${limite_cheque!.toStringAsFixed(2)}');
         print('----------------------------------------------');
         break;
-      } else if(aplicarLimite == 'nao'.toLowerCase() || aplicarLimite == 'nao'.toUpperCase()) {
+      } else if (aplicarLimite == 'nao'.toLowerCase() ||
+          aplicarLimite == 'nao'.toUpperCase()) {
         print('Nenhum limite aplicado!');
         print('----------------------------------------------');
         break;
-      };
+      }
+      ;
     }
   }
 }
 
-class ContaPoupanca extends Conta{
-  double taxaRendimento = 0;
-  ContaPoupanca({required String nome_titular, required double saldoInicial, required taxaRendimento})
-  :super(nome_titular: nome_titular, saldoInicial: saldoInicial);
+class ContaPoupanca extends Conta {
+  double taxaRendimento;
+  ContaPoupanca({
+    required String nome_titular,
+    required double saldoInicial,
+    double? investimento,
+    required double this.taxaRendimento,
+  }) : super(nome_titular: nome_titular, saldoInicial: saldoInicial, investimento: investimento);
 
   @override
   void informacoes() {
@@ -76,25 +92,37 @@ class ContaPoupanca extends Conta{
     print('Saldo Inicial: ${saldoInicial.toStringAsFixed(2)}');
     if (investimento == null) {
       print('Não existe investimento para essa pessoa!');
-      print('----------------------------------------------');
     } else {
       print('Investimento: ${investimento!.toStringAsFixed(2)}');
-      print('----------------------------------------------');
     }
   }
 
-  set aplicarTaxa(int novoSaldoAtualizado){
-
-    
+  void aplicarTaxa(double novoSaldoAtualizado) {
+    if (novoSaldoAtualizado < 0) {
+      print('O valor não pode ser menor que o 0.');
+    } else {
+      taxaRendimento = novoSaldoAtualizado + saldoInicial;
+      print('Salário atualizado c/ taxa: ${taxaRendimento.toStringAsFixed(2)}');
+      print('----------------------------------------------');
+    }
   }
-
-
 }
 
 void main() {
-  ContaCorrente corrente1 = new ContaCorrente(nome_titular: 'Leandro', saldoInicial: 4000.00);
-  ContaCorrente corrente2 = new ContaCorrente(nome_titular: 'Miguel', saldoInicial: 10000.00);
-  ContaCorrente corrente3 = new ContaCorrente(nome_titular: 'Murilo', saldoInicial: 16000.00);
+  ContaCorrente corrente1 = new ContaCorrente(
+    nome_titular: 'Leandro',
+    saldoInicial: 4000.00,
+    investimento: 20.00,
+  );
+  ContaCorrente corrente2 = new ContaCorrente(
+    nome_titular: 'Miguel',
+    saldoInicial: 10000.00,
+  );
+  ContaCorrente corrente3 = new ContaCorrente(
+    nome_titular: 'Murilo',
+    saldoInicial: 16000.00,
+    investimento: 80.00,
+  );
 
   print('Conta Corrente:');
   print('----------------------------------------------');
@@ -106,17 +134,31 @@ void main() {
   corrente3.informacoes();
   corrente3.limite();
 
-  ContaPoupanca poupanca1 = new ContaPoupanca(nome_titular: 'Douglas', saldoInicial: 1800.00, taxaRendimento: 100.00);
-  ContaPoupanca poupanca2 = new ContaPoupanca(nome_titular: 'Douglas', saldoInicial: 1800.00, taxaRendimento: 200.00);
-  ContaPoupanca poupanca3 = new ContaPoupanca(nome_titular: 'Douglas', saldoInicial: 1800.00, taxaRendimento: 300.00);
-  //
-  //
+  ContaPoupanca poupanca1 = new ContaPoupanca(
+    nome_titular: 'Douglas',
+    saldoInicial: 1800.00,
+    taxaRendimento: 100.00,
+    investimento: 200.00,
+  );
+  ContaPoupanca poupanca2 = new ContaPoupanca(
+    nome_titular: 'Henrique',
+    saldoInicial: 2200.00,
+    taxaRendimento: 200.00,
+    investimento: 50.00,
+  );
+  ContaPoupanca poupanca3 = new ContaPoupanca(
+    nome_titular: 'José',
+    saldoInicial: 1556.80,
+    taxaRendimento: 300.00,
+  );
 
   print('Conta Poupança:');
   print('----------------------------------------------');
 
   poupanca1.informacoes();
+  poupanca1.aplicarTaxa(30.00);
   poupanca2.informacoes();
+  poupanca2.aplicarTaxa(80.00);
   poupanca3.informacoes();
-
+  poupanca3.aplicarTaxa(100.00);
 }
