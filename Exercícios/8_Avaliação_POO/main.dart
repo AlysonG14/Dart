@@ -4,6 +4,9 @@ import 'dart:io';
 void main() {
   String nomeAnimal;
   String corAnimal;
+  String alimentacaoAnimal;
+  String escolheAlimento;
+  String porteAnimal;
   String? entradaAnimal;
   int idadeAnimal;
   int? entradaOpcao;
@@ -11,8 +14,10 @@ void main() {
   List cadastramentoMacaco = [];
   List cadastramentoGato = [];
 
-  List <Map<String, dynamic>> cadastroAnimalCompleto = [
-    {'nome': null, 'idade': 0, 'cor': null}
+  List<Map<String, dynamic>> cadastroAnimalCompleto = [
+    {'nome': null, 'idade': 0, 'cor': null, 'alimentacao': null, 'porte': null},
+    {'nome': null, 'idade': 0, 'cor': null, 'alimentacao': null, 'porte': null},
+    {'nome': null, 'idade': 0, 'cor': null, 'alimentacao': null, 'porte': null},
   ];
 
   print('Animais cadastrados:');
@@ -25,6 +30,8 @@ void main() {
     possuiDoenca: 'Deformidade na pata',
     porte: 'Grande',
   );
+
+  print('');
 
   Mufasa.exibirInformacoes();
 
@@ -43,7 +50,7 @@ void main() {
     idade: 3,
     especie: 'Mamífero',
     possuiDoenca: 'Febre',
-    porte: 'Médio'
+    porte: 'Médio',
   );
 
   Marcel.exibirInformacoes();
@@ -63,7 +70,7 @@ void main() {
     idade: 5,
     especie: 'Felino',
     possuiDoenca: 'Nenhum',
-    porte: 'Pequeno'
+    porte: 'Pequeno',
   );
 
   Tom.exibirInformacoes();
@@ -77,114 +84,192 @@ void main() {
   Tom.porteAnimal();
 
   while (true) {
-    print('Escolhe as opções');
+    print('Escolhe as opções: ');
     print('1- Cadastrar animal');
     print('2- Listar animais');
     print('3- Editar animal');
     print('4- Remover animal');
     entradaOpcao = int.parse(stdin.readLineSync()!);
 
-    do {
-      switch (entradaOpcao) {
-        case 1:
-          print(
-            'Escolhe qual animal você deseja cadastrar? (Digite S para sair)',
-          );
-          if (entradaAnimal == 's' || entradaAnimal == 'S') {
-            print('Você saiu');
+    switch (entradaOpcao) {
+      case 1:
+        print(
+          'Escolhe qual animal você deseja cadastrar? (Digite S para sair)',
+        );
+        if (entradaAnimal == 's'.toLowerCase() ||
+            entradaAnimal == 'S'.toUpperCase()) {
+          print('Você saiu');
+        }
+        ;
+        print('1- Leao');
+        print('2- Macaco');
+        print('3- Gato');
+        entradaAnimal = stdin.readLineSync()!;
+        switch (entradaAnimal) {
+          case 'Leao':
+            print('Digite o nome: ');
+            nomeAnimal = stdin.readLineSync()!;
+            cadastramentoLeao.add(nomeAnimal);
+            cadastroAnimalCompleto[0]['nome'] = cadastramentoLeao;
+
+            print('Digite a idade: ');
+            idadeAnimal = int.parse(stdin.readLineSync()!);
+            cadastramentoLeao.add(idadeAnimal);
+            cadastroAnimalCompleto[0]['idade'] = cadastramentoLeao;
+
+            print('Digite a cor: ');
+            corAnimal = stdin.readLineSync()!;
+            cadastramentoLeao.add(corAnimal);
+            cadastroAnimalCompleto[0]['cor'] = cadastramentoLeao;
+
+            print('Existe alimentação? \nDigite as opções: \n1- sim \n2- nao');
+            escolheAlimento = stdin.readLineSync()!;
+            if ((escolheAlimento == 'sim'.toUpperCase() ||
+                escolheAlimento == 'sim'.toLowerCase())) {
+              print('Alimentação: ');
+              alimentacaoAnimal = stdin.readLineSync()!;
+              cadastramentoLeao.add(alimentacaoAnimal);
+              cadastroAnimalCompleto[0]['alimentacao'] = cadastramentoLeao;
+              print("Alimentação '${alimentacaoAnimal}' adicionado!");
+            } else if (escolheAlimento == 'nao'.toLowerCase() ||
+                escolheAlimento == 'nao'.toUpperCase()) {
+              print('Você escolheu não!');
+              print('Esse animalzinho não tem fome');
+            } else {
+              print('Opção inválido');
+            }
+
+            print(
+              "Qual porte você deseja colocar? \nEscolhe essas três opções: \n1- pequeno \n2- medio \n3- alto",
+            );
+            porteAnimal = stdin.readLineSync()!;
+            while (porteAnimal != 'pequeno' &&
+                porteAnimal != 'medio' &&
+                porteAnimal != 'alto') {
+              print('Porte não específicada, tente novamente!');
+              porteAnimal = stdin.readLineSync()!;
+            }
+            print("Porte '${porteAnimal}' adicionado!");
+            cadastramentoLeao.add(porteAnimal);
+            cadastroAnimalCompleto[0]['porte'] = cadastramentoLeao;
+
+            print('Cadastramento completo.');
+
             break;
-          }
-          print('1- Leao');
-          print('2- Macaco');
-          print('3- Gato');
-          entradaAnimal = stdin.readLineSync()!;
-          switch (entradaAnimal) {
 
-            case 'Leao':
-              print('Digite o nome: ');
-              nomeAnimal = stdin.readLineSync()!;
-              cadastramentoLeao.add(nomeAnimal);
-              cadastroAnimalCompleto[0]['nome'] = cadastramentoLeao;
+          case 'Macaco':
+            print('Digite o nome: ');
+            nomeAnimal = stdin.readLineSync()!;
+            cadastramentoMacaco.add(nomeAnimal);
+            cadastroAnimalCompleto[1]['nome'] = cadastramentoMacaco;
 
-              print('Digite a idade: ');
-              idadeAnimal = int.parse(stdin.readLineSync()!);
-              cadastramentoLeao.add(idadeAnimal);
-              cadastroAnimalCompleto[0]['idade'] = cadastramentoLeao;
+            print('Digite a idade: ');
+            idadeAnimal = int.parse(stdin.readLineSync()!);
+            cadastramentoMacaco.add(idadeAnimal);
+            cadastroAnimalCompleto[1]['idade'] = cadastramentoMacaco;
 
-              print('Digite a cor: ');
-              corAnimal = stdin.readLineSync()!;
-              cadastramentoLeao.add(corAnimal);
-              cadastroAnimalCompleto[0]['cor'] = cadastramentoLeao;
+            print('Digite a cor: ');
+            corAnimal = stdin.readLineSync()!;
+            cadastramentoMacaco.add(corAnimal);
+            cadastroAnimalCompleto[1]['cor'] = cadastramentoMacaco;
 
-              print('Cadastramento completo.');
+            print('Existe alimentação? \nDigite as opções: \n1- sim \n2- nao');
+            escolheAlimento = stdin.readLineSync()!;
+            if ((escolheAlimento == 'sim'.toUpperCase() ||
+                escolheAlimento == 'sim'.toLowerCase())) {
+              print('Alimentação: ');
+              alimentacaoAnimal = stdin.readLineSync()!;
+              cadastramentoMacaco.add(alimentacaoAnimal);
+              cadastroAnimalCompleto[1]['alimentacao'] = cadastramentoMacaco;
+              print("Alimentação '${alimentacaoAnimal}' adicionado!");
+            } else if (escolheAlimento == 'nao'.toLowerCase() ||
+                escolheAlimento == 'nao'.toUpperCase()) {
+              print('Você escolheu não!');
+              print('Esse animalzinho não tem fome');
+            } else {
+              print('Opção inválido');
+            }
 
-              for(dynamic cadastroCompleto = 0; cadastroCompleto < cadastroAnimalCompleto.length; cadastroCompleto++){
-                cadastroCompleto = [nomeAnimal] + [idadeAnimal.toString()] + [corAnimal]; 
-                print("${cadastramentoLeao} Cadastrado.");
-              }
+            print(
+              "Qual porte você deseja colocar? \nEscolhe essas três opções: \n1- pequeno \n2- medio \n3- alto",
+            );
+            porteAnimal = stdin.readLineSync()!;
+            while (porteAnimal != 'pequeno' &&
+                porteAnimal != 'medio' &&
+                porteAnimal != 'alto') {
+              print('Porte não específicada, tente novamente!');
+              porteAnimal = stdin.readLineSync()!;
+            }
+            print("Porte '${porteAnimal}' adicionado!");
+            cadastramentoMacaco.add(porteAnimal);
+            cadastroAnimalCompleto[0]['porte'] = cadastramentoMacaco;
 
-              break;
-            case 'Macaco':
-              print('Digite o nome: ');
-              nomeAnimal = stdin.readLineSync()!;
-              cadastramentoMacaco.add(nomeAnimal);
-              cadastroAnimalCompleto[1]['nome'] += cadastramentoMacaco;
+            print('Cadastramento completo.');
 
-              print('Digite a idade: ');
-              idadeAnimal = int.parse(stdin.readLineSync()!);
-              cadastramentoMacaco.add(idadeAnimal);
-              cadastroAnimalCompleto[1]['idade'] += cadastramentoMacaco;
+            break;
 
-              print('Digite a cor: ');
-              corAnimal = stdin.readLineSync()!;
-              cadastramentoMacaco.add(corAnimal);
-              cadastroAnimalCompleto[1]['cor'] += cadastramentoMacaco;
-              
-              print('Cadastramento completo.');
+          case 'Gato':
+            print('Digite o nome: ');
+            nomeAnimal = stdin.readLineSync()!;
+            cadastramentoGato.add(nomeAnimal);
+            cadastroAnimalCompleto[2]['nome'] = cadastramentoGato;
 
-              for(dynamic cadastroCompleto = 0; cadastroCompleto < cadastroAnimalCompleto.length; cadastroCompleto++){
-                cadastroCompleto = [nomeAnimal] + [idadeAnimal.toString()] + [corAnimal]; 
-                print("${cadastroCompleto} Cadastrado.");
-              }
+            print('Digite a idade: ');
+            idadeAnimal = int.parse(stdin.readLineSync()!);
+            cadastramentoGato.add(idadeAnimal);
+            cadastroAnimalCompleto[2]['idade'] = cadastramentoGato;
 
-              break;
+            print('Digite a cor: ');
+            corAnimal = stdin.readLineSync()!;
+            cadastramentoGato.add(corAnimal);
+            cadastroAnimalCompleto[2]['cor'] = cadastramentoGato;
 
-            case 'Gato':
-              print('Digite o nome');
-              nomeAnimal = stdin.readLineSync()!;
-              cadastramentoGato.add(nomeAnimal);
-              cadastroAnimalCompleto[0]['nome'] += cadastramentoGato;
+            print('Existe alimentação? \nDigite as opções: \n1- sim \n2- nao');
+            escolheAlimento = stdin.readLineSync()!;
+            if (escolheAlimento == 'sim'.toUpperCase() ||
+                escolheAlimento == 'sim'.toLowerCase()) {
+              print('Alimentação: ');
+              alimentacaoAnimal = stdin.readLineSync()!;
+              cadastramentoGato.add(alimentacaoAnimal);
+              cadastroAnimalCompleto[2]['alimentacao'] = cadastramentoGato;
+              print("Alimentação '${alimentacaoAnimal}' adicionado!");
+            } else if (escolheAlimento == 'nao'.toLowerCase() ||
+                escolheAlimento == 'nao'.toUpperCase()) {
+              print('Você escolheu não!');
+              print('Esse animalzinho não tem fome');
+            } else {
+              print('Opção inválido');
+            }
 
-              print('Digite a idade');
-              idadeAnimal = int.parse(stdin.readLineSync()!);
-              cadastramentoGato.add(idadeAnimal);
-              cadastroAnimalCompleto[0]['idade'] += cadastramentoGato;
+            print(
+              "Qual porte você deseja colocar? \nEscolhe essas três opções: \n1- pequeno \n2- medio \n3- alto",
+            );
+            porteAnimal = stdin.readLineSync()!;
+            while (porteAnimal != 'pequeno' &&
+                porteAnimal != 'medio' &&
+                porteAnimal != 'alto') {
+              print('Porte não específicada, tente novamente!');
+              porteAnimal = stdin.readLineSync()!;
+            }
+            print("Porte '${porteAnimal}' adicionado!");
+            cadastramentoGato.add(porteAnimal);
+            cadastroAnimalCompleto[0]['porte'] = cadastramentoGato;
 
-              print('Digite a cor');
-              corAnimal = stdin.readLineSync()!;
-              cadastramentoGato.add(corAnimal);
-              cadastroAnimalCompleto[0]['cor'] += cadastramentoGato;
+            print('Cadastramento completo.');
 
-              print('Cadastramento completo.');
+            break;
 
-              for(dynamic cadastroCompleto = 0; cadastroCompleto < cadastroAnimalCompleto.length; cadastroCompleto++){
-                cadastroCompleto = [nomeAnimal] + [idadeAnimal.toString()] + [corAnimal]; 
-                print("${cadastroCompleto} Cadastrado.");
-              }
-
-              break;
-            default:
-              print('Opção Inválido! Escolhe corretamente as opções 1, 2 e 3');
-          }
-        case 2:
-          print('Escolhe qual animal você deseja listar? (Digite S para voltar)');
-          print('1- Leao');
-          print('2- Macaco');
-          print('3- Gato');
-          entradaAnimal = stdin.readLineSync()!;
-          switch(entradaAnimal){
-            case 'Leao':
-
+          default:
+            print('Opção Inválido! Escolhe corretamente as opções 1, 2 e 3');
+        }
+      case 2:
+        print('Escolhe qual animal você deseja listar? (Digite S para voltar)');
+        print('1- Leao');
+        print('2- Macaco');
+        print('3- Gato');
+        entradaAnimal = stdin.readLineSync()!;
+        switch (entradaAnimal) {
+          case 'Leao':
             print('--------------------------------');
 
             Mufasa.exibirInformacoes();
@@ -197,15 +282,15 @@ void main() {
 
             Mufasa.porteAnimal();
 
-            for(dynamic cadastro in cadastroAnimalCompleto){
-              cadastro = cadastramentoLeao;
-              print(cadastro);
+            for (dynamic leaoLista in cadastramentoLeao) {
+              print(leaoLista);
             }
-            
+
+            print('--------------------------------');
+
             break;
 
-            case 'Macaco':
-
+          case 'Macaco':
             print('--------------------------------');
 
             Marcel.exibirInformacoes();
@@ -218,15 +303,13 @@ void main() {
 
             Marcel.porteAnimal();
 
-            for(dynamic cadastro in cadastroAnimalCompleto){
-              cadastro = cadastramentoMacaco;
-              print(cadastro);
+            for (dynamic listaMacaco in cadastramentoMacaco) {
+              print(listaMacaco);
             }
 
             break;
 
-            case 'Gato':
-
+          case 'Gato':
             print('--------------------------------');
 
             Tom.exibirInformacoes();
@@ -239,31 +322,29 @@ void main() {
 
             Tom.porteAnimal();
 
-            for(dynamic cadastro in cadastroAnimalCompleto){
-              cadastro = cadastramentoGato;
-              print(cadastro);
+            for (dynamic listaGato in cadastramentoGato) {
+              print(listaGato);
             }
 
             break;
-          }
-          break;
-        case 3:
-          print('Escolhe qual animal você deseja editar?');
-          print('Leão');
-          print('Macaco');
-          print('Gato');
-          entradaAnimal = stdin.readLineSync()!;
-          break;
-        case 4:
-          print('Escolhe qual animal você deseja remover?');
-          print('Leão');
-          print('Macaco');
-          print('Gato');
-          entradaAnimal = stdin.readLineSync()!;
-          break;
-        default:
-          print('Opção Inválido, escolhe corretamente as opções: 1, 2, 3 e  4');
-      }
-    } while (entradaOpcao < 1 || entradaOpcao < 4);
+        }
+        break;
+      case 3:
+        print('Escolhe qual animal você deseja editar?');
+        print('Leão');
+        print('Macaco');
+        print('Gato');
+        entradaAnimal = stdin.readLineSync()!;
+        break;
+      case 4:
+        print('Escolhe qual animal você deseja remover?');
+        print('Leão');
+        print('Macaco');
+        print('Gato');
+        entradaAnimal = stdin.readLineSync()!;
+        break;
+      default:
+        print('Opção Inválido, escolhe corretamente as opções: 1, 2, 3 e 4');
+    }
   }
 }
