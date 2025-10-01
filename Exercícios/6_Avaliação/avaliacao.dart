@@ -234,7 +234,7 @@ void main() {
           while(quantidade_desejada! > 2){
             print("Estoque insuficiente, tente novamente!");
             quantidade_desejada = int.parse(stdin.readLineSync()!);
-          }
+          } 
           if (quantidade_desejada <= 2 && quantidade_desejada >= 1) {
             print("Produto adicionado ao carrinho!");
 

@@ -2,13 +2,15 @@ import 'Animal.dart';
 import 'dart:io';
 
 void main() {
-  String nomeAnimal;
-  String corAnimal;
-  String alimentacaoAnimal;
-  String escolheAlimento;
-  String porteAnimal;
+  String? corAnimal;
+  String? alimentacaoAnimal;
+  String? escolheAlimento;
+  String? porteAnimal;
+  String? editarAnimal;
   String? entradaAnimal;
-  int idadeAnimal;
+  String? nomeAnimal;
+  int pegarAnimal;
+  int? idadeAnimal;
   int? entradaOpcao;
   List cadastramentoLeao = [];
   List cadastramentoMacaco = [];
@@ -283,7 +285,8 @@ void main() {
             Mufasa.porteAnimal();
 
             for (dynamic leaoLista in cadastramentoLeao) {
-              print(leaoLista);
+              print("${leaoLista}");
+              print('--------------------------------');
             }
 
             print('--------------------------------');
@@ -304,7 +307,8 @@ void main() {
             Marcel.porteAnimal();
 
             for (dynamic listaMacaco in cadastramentoMacaco) {
-              print(listaMacaco);
+              print("${listaMacaco}");
+              print('--------------------------------');
             }
 
             break;
@@ -323,7 +327,8 @@ void main() {
             Tom.porteAnimal();
 
             for (dynamic listaGato in cadastramentoGato) {
-              print(listaGato);
+              print("${listaGato}");
+              print('--------------------------------');
             }
 
             break;
@@ -331,16 +336,165 @@ void main() {
         break;
       case 3:
         print('Escolhe qual animal você deseja editar?');
-        print('Leão');
-        print('Macaco');
-        print('Gato');
+        print('1- Leao');
+        print('2- Macaco');
+        print('3- Gato');
         entradaAnimal = stdin.readLineSync()!;
+        switch (entradaAnimal) {
+          case 'Leao':
+            print('--------------------------------');
+
+            Mufasa.exibirInformacoes();
+
+            Mufasa.exibirSom();
+
+            Mufasa.alimentacao();
+
+            Mufasa.doenca();
+
+            Mufasa.porteAnimal();
+
+            for (dynamic listaLeao in cadastramentoLeao) {
+              print("${listaLeao}");
+              print('--------------------------------');
+            }
+            print('--------------------------------');
+
+            print('Escolhe qual Leão você deseja editar:');
+            editarAnimal = stdin.readLineSync()!;
+
+            if (editarAnimal == nomeAnimal) {
+
+              for (pegarAnimal = 0; pegarAnimal < cadastramentoLeao.length; pegarAnimal += 1) {
+                if(cadastramentoLeao[pegarAnimal] != nomeAnimal &&
+                cadastramentoLeao[pegarAnimal] != idadeAnimal && 
+                cadastramentoLeao[pegarAnimal] != corAnimal
+                ){
+
+                print("Digite o nome: ");
+                nomeAnimal = stdin.readLineSync()!;
+                cadastramentoLeao[pegarAnimal] = nomeAnimal;
+
+                print("Digite a idade: ");
+                idadeAnimal = int.parse(stdin.readLineSync()!);
+                cadastramentoLeao[pegarAnimal] = idadeAnimal;
+
+                print("Digite a cor: ");
+                corAnimal = stdin.readLineSync()!;
+                cadastramentoLeao[pegarAnimal] = corAnimal;
+                }
+              }
+                print("Atualizado com sucesso");
+            } else {
+              print('Não encontrado no sistema do ZOOMANGE');
+            }
+            break;
+          case 'Macaco':
+            print('--------------------------------');
+
+            Marcel.exibirInformacoes();
+
+            Marcel.exibirSom();
+
+            Marcel.alimentacao();
+
+            Marcel.doenca();
+
+            Marcel.porteAnimal();
+
+            for (dynamic listaMacaco in cadastramentoMacaco) {
+              print("${listaMacaco}");
+              print('--------------------------------');
+            }
+            print('--------------------------------');
+
+            print('Escolhe qual Macaco você deseja editar:');
+            editarAnimal = stdin.readLineSync()!;
+
+            if (editarAnimal == nomeAnimal) {
+
+              for (pegarAnimal = 0; pegarAnimal < cadastramentoMacaco.length; pegarAnimal += 1) {
+                if(cadastramentoMacaco[pegarAnimal] != nomeAnimal &&
+                cadastramentoMacaco[pegarAnimal] != idadeAnimal && 
+                cadastramentoMacaco[pegarAnimal] != corAnimal
+                ){
+
+                print("Digite o nome: ");
+                nomeAnimal = stdin.readLineSync()!;
+                cadastramentoMacaco[pegarAnimal] = nomeAnimal;
+
+                print("Digite a idade: ");
+                idadeAnimal = int.parse(stdin.readLineSync()!);
+                cadastramentoMacaco[pegarAnimal] = idadeAnimal;
+
+                print("Digite a cor: ");
+                corAnimal = stdin.readLineSync()!;
+                cadastramentoMacaco[pegarAnimal] = corAnimal;
+                }
+              }
+                print("Atualizado com sucesso");
+            } else {
+              print('Não encontrado no sistema do ZOOMANGE');
+            }
+            break;
+          case 'Gato':
+          
+          print('--------------------------------');
+
+            Tom.exibirInformacoes();
+
+            Tom.exibirSom();
+
+            Tom.alimentacao();
+
+            Tom.doenca();
+
+            Tom.porteAnimal();
+
+            for (dynamic listaGato in cadastramentoGato) {
+              print("${listaGato}");
+              print('--------------------------------');
+            }
+            print('--------------------------------');
+
+            print('Escolhe qual Gato você deseja editar:');
+            editarAnimal = stdin.readLineSync()!;
+
+            if (editarAnimal == nomeAnimal) {
+
+              for (pegarAnimal = 0; pegarAnimal < cadastramentoGato.length; pegarAnimal += 1) {
+                if(cadastramentoGato[pegarAnimal] != nomeAnimal &&
+                cadastramentoGato[pegarAnimal] != idadeAnimal && 
+                cadastramentoGato[pegarAnimal] != corAnimal
+                ){
+
+                print("Digite o nome: ");
+                nomeAnimal = stdin.readLineSync()!;
+                cadastramentoGato[pegarAnimal] = nomeAnimal;
+
+                print("Digite a idade: ");
+                idadeAnimal = int.parse(stdin.readLineSync()!);
+                cadastramentoGato[pegarAnimal] = idadeAnimal;
+
+                print("Digite a cor: ");
+                corAnimal = stdin.readLineSync()!;
+                cadastramentoGato[pegarAnimal] = corAnimal;
+                }
+              }
+                print("Atualizado com sucesso");
+            } else {
+              print('Não encontrado no sistema do ZOOMANGE');
+            }
+          break;
+          default:
+            print("Opção Inválida!");
+        }
         break;
       case 4:
         print('Escolhe qual animal você deseja remover?');
-        print('Leão');
-        print('Macaco');
-        print('Gato');
+        print('1- Leao');
+        print('2- Macaco');
+        print('3- Gato');
         entradaAnimal = stdin.readLineSync()!;
         break;
       default:
