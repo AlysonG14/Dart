@@ -1,5 +1,7 @@
 import 'dart:io';
 
+
+
 class ZOOMANGE {
   String porte;
 
@@ -7,7 +9,10 @@ class ZOOMANGE {
 
   void porteAnimal() {
     print('Porte: Esse vai ser o porte onde o animal ficará cadastrado.');
+
   }
+
+
 }
 
 class Animal extends ZOOMANGE {
@@ -23,6 +28,12 @@ class Animal extends ZOOMANGE {
     required this.tipoAnimal,
     required String porte,
   }) : super(porte: porte);
+
+
+  
+  String toString() {
+    return "Nome: $nome \n Idade: $idade, \n cor: $cor \n tipo: $tipoAnimal";
+  }
 
   void exibirInformacoes() {
     print('Tipo: Esse vai ser o tipo do animal');
@@ -46,7 +57,17 @@ class Animal extends ZOOMANGE {
   void porteAnimal() {
     print('Porte: Esse vai ser o porte onde o animal ficará cadastrado.');
   }
+
+
+   void mudarnome(String newnome) {
+    nome = newnome;
+  }
+
+  
+ 
 }
+
+
 
 class Leao extends Animal {
   String? especie;
@@ -95,6 +116,10 @@ class Leao extends Animal {
   void porteAnimal() {
     print('Porte: ${porte}');
     print('--------------------------------');
+  }
+  @override
+   void mudarnome(String newnome) {
+    nome = newnome;
   }
 }
 
@@ -146,6 +171,11 @@ class Macaco extends Animal {
     print('Porte: ${porte}');
     print('--------------------------------');
   }
+
+  @override
+   void mudarnome(String newnome) {
+    nome = newnome;
+  }
 }
 
 class Gato extends Animal {
@@ -195,5 +225,10 @@ class Gato extends Animal {
   void porteAnimal() {
     print("Porte: ${porte}");
     print('--------------------------------');
+  }
+
+  @override
+   void mudarnome(String newnome) {
+    nome = newnome;
   }
 }

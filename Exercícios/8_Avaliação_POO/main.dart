@@ -1,16 +1,18 @@
 import 'Animal.dart';
 import 'dart:io';
 
+
+
 void main() {
-  String? corAnimal;
-  String? alimentacaoAnimal;
-  String? escolheAlimento;
-  String? porteAnimal;
-  String? editarAnimal;
-  String? entradaAnimal;
-  String? nomeAnimal;
-  int pegarAnimal;
-  int? idadeAnimal;
+  
+  String corAnimal = "";
+  String alimentacaoAnimal = "";
+  String escolheAlimento = "";
+  String porteAnimal = "";
+  dynamic editarAnimal = "";
+  String entradaAnimal = "";
+  String nomeAnimal = "";
+  int idadeAnimal = 0;
   int? entradaOpcao;
   List cadastramentoLeao = [];
   List cadastramentoMacaco = [];
@@ -21,6 +23,8 @@ void main() {
     {'nome': null, 'idade': 0, 'cor': null, 'alimentacao': null, 'porte': null},
     {'nome': null, 'idade': 0, 'cor': null, 'alimentacao': null, 'porte': null},
   ];
+  
+
 
   print('Animais cadastrados:');
   Leao Mufasa = new Leao(
@@ -109,6 +113,7 @@ void main() {
         entradaAnimal = stdin.readLineSync()!;
         switch (entradaAnimal) {
           case 'Leao':
+            
             print('Digite o nome: ');
             nomeAnimal = stdin.readLineSync()!;
             cadastramentoLeao.add(nomeAnimal);
@@ -154,7 +159,9 @@ void main() {
             print("Porte '${porteAnimal}' adicionado!");
             cadastramentoLeao.add(porteAnimal);
             cadastroAnimalCompleto[0]['porte'] = cadastramentoLeao;
-
+            Leao Lyon = Leao(nome: nomeAnimal, idade: idadeAnimal, tipoAnimal: "Leao",porte: porteAnimal,cor: corAnimal  );
+            cadastramentoLeao.add(Lyon);
+            print(Lyon);
             print('Cadastramento completo.');
 
             break;
@@ -204,7 +211,10 @@ void main() {
             }
             print("Porte '${porteAnimal}' adicionado!");
             cadastramentoMacaco.add(porteAnimal);
+            Macaco Monkey = Macaco(nome: nomeAnimal, idade: idadeAnimal, tipoAnimal: "Macaco",porte: porteAnimal,cor: corAnimal  );
+            cadastramentoMacaco.add(Macaco);
             cadastroAnimalCompleto[0]['porte'] = cadastramentoMacaco;
+            print(Monkey);
 
             print('Cadastramento completo.');
 
@@ -255,7 +265,9 @@ void main() {
             }
             print("Porte '${porteAnimal}' adicionado!");
             cadastramentoGato.add(porteAnimal);
+            Gato Cat = Gato(nome: nomeAnimal, idade: idadeAnimal, tipoAnimal: "Gato",porte: porteAnimal,cor: corAnimal  );
             cadastroAnimalCompleto[0]['porte'] = cadastramentoGato;
+            cadastramentoGato.add(Cat);
 
             print('Cadastramento completo.');
 
@@ -286,9 +298,8 @@ void main() {
 
             for (dynamic leaoLista in cadastramentoLeao) {
               print("${leaoLista}");
-              print('--------------------------------');
             }
-
+           
             print('--------------------------------');
 
             break;
@@ -308,7 +319,6 @@ void main() {
 
             for (dynamic listaMacaco in cadastramentoMacaco) {
               print("${listaMacaco}");
-              print('--------------------------------');
             }
 
             break;
@@ -328,7 +338,6 @@ void main() {
 
             for (dynamic listaGato in cadastramentoGato) {
               print("${listaGato}");
-              print('--------------------------------');
             }
 
             break;
@@ -356,34 +365,24 @@ void main() {
 
             for (dynamic listaLeao in cadastramentoLeao) {
               print("${listaLeao}");
-              print('--------------------------------');
             }
             print('--------------------------------');
 
             print('Escolhe qual Leão você deseja editar:');
-            editarAnimal = stdin.readLineSync()!;
+             editarAnimal = stdin.readLineSync()!;
 
             if (editarAnimal == nomeAnimal) {
-
-              for (pegarAnimal = 0; pegarAnimal < cadastramentoLeao.length; pegarAnimal += 1) {
-                if(cadastramentoLeao[pegarAnimal] != nomeAnimal &&
-                cadastramentoLeao[pegarAnimal] != idadeAnimal && 
-                cadastramentoLeao[pegarAnimal] != corAnimal
+              
+                if(
+                  cadastramentoLeao.contains(editarAnimal)
                 ){
 
                 print("Digite o nome: ");
                 nomeAnimal = stdin.readLineSync()!;
-                cadastramentoLeao[pegarAnimal] = nomeAnimal;
-
-                print("Digite a idade: ");
-                idadeAnimal = int.parse(stdin.readLineSync()!);
-                cadastramentoLeao[pegarAnimal] = idadeAnimal;
-
-                print("Digite a cor: ");
-                corAnimal = stdin.readLineSync()!;
-                cadastramentoLeao[pegarAnimal] = corAnimal;
+                cadastramentoLeao[0].mudarnome(nomeAnimal) ;
+                
                 }
-              }
+              
                 print("Atualizado com sucesso");
             } else {
               print('Não encontrado no sistema do ZOOMANGE');
@@ -404,7 +403,6 @@ void main() {
 
             for (dynamic listaMacaco in cadastramentoMacaco) {
               print("${listaMacaco}");
-              print('--------------------------------');
             }
             print('--------------------------------');
 
@@ -413,25 +411,15 @@ void main() {
 
             if (editarAnimal == nomeAnimal) {
 
-              for (pegarAnimal = 0; pegarAnimal < cadastramentoMacaco.length; pegarAnimal += 1) {
-                if(cadastramentoMacaco[pegarAnimal] != nomeAnimal &&
-                cadastramentoMacaco[pegarAnimal] != idadeAnimal && 
-                cadastramentoMacaco[pegarAnimal] != corAnimal
+                if(
+                  cadastramentoMacaco.contains(editarAnimal)
                 ){
 
                 print("Digite o nome: ");
                 nomeAnimal = stdin.readLineSync()!;
-                cadastramentoMacaco[pegarAnimal] = nomeAnimal;
-
-                print("Digite a idade: ");
-                idadeAnimal = int.parse(stdin.readLineSync()!);
-                cadastramentoMacaco[pegarAnimal] = idadeAnimal;
-
-                print("Digite a cor: ");
-                corAnimal = stdin.readLineSync()!;
-                cadastramentoMacaco[pegarAnimal] = corAnimal;
-                }
+                cadastramentoMacaco[0].mudarnome(nomeAnimal) ;
               }
+
                 print("Atualizado com sucesso");
             } else {
               print('Não encontrado no sistema do ZOOMANGE');
@@ -453,7 +441,6 @@ void main() {
 
             for (dynamic listaGato in cadastramentoGato) {
               print("${listaGato}");
-              print('--------------------------------');
             }
             print('--------------------------------');
 
@@ -462,24 +449,13 @@ void main() {
 
             if (editarAnimal == nomeAnimal) {
 
-              for (pegarAnimal = 0; pegarAnimal < cadastramentoGato.length; pegarAnimal += 1) {
-                if(cadastramentoGato[pegarAnimal] != nomeAnimal &&
-                cadastramentoGato[pegarAnimal] != idadeAnimal && 
-                cadastramentoGato[pegarAnimal] != corAnimal
+                if(
+                  cadastramentoGato.contains(editarAnimal)
                 ){
 
                 print("Digite o nome: ");
                 nomeAnimal = stdin.readLineSync()!;
-                cadastramentoGato[pegarAnimal] = nomeAnimal;
-
-                print("Digite a idade: ");
-                idadeAnimal = int.parse(stdin.readLineSync()!);
-                cadastramentoGato[pegarAnimal] = idadeAnimal;
-
-                print("Digite a cor: ");
-                corAnimal = stdin.readLineSync()!;
-                cadastramentoGato[pegarAnimal] = corAnimal;
-                }
+                cadastramentoGato[0].mudarnome(nomeAnimal) ;
               }
                 print("Atualizado com sucesso");
             } else {
@@ -496,9 +472,82 @@ void main() {
         print('2- Macaco');
         print('3- Gato');
         entradaAnimal = stdin.readLineSync()!;
-        break;
+
+        switch(entradaAnimal){
+          case 'Leao':
+
+          print('--------------------------------');
+
+            Mufasa.exibirInformacoes();
+
+            Mufasa.exibirSom();
+
+            Mufasa.alimentacao();
+
+            Mufasa.doenca();
+
+            Mufasa.porteAnimal();
+
+            for(int i= 0; i < cadastramentoLeao.length; i++){
+              print("$i $cadastramentoLeao[i]");
+            }
+            print("Qual index deseja remover");
+            int index = int.parse(stdin.readLineSync()!);
+            cadastramentoLeao.remove(index);
+            print(cadastramentoLeao);
+          break;
+
+          case 'Macaco':
+
+          print('--------------------------------');
+
+
+            Marcel.exibirInformacoes();
+
+            Marcel.exibirSom();
+
+            Marcel.alimentacao();
+
+            Marcel.doenca();
+
+            Marcel.porteAnimal();
+
+            for(int i= 0; i < cadastramentoMacaco.length; i++){
+              print("$i $cadastramentoMacaco[i]");
+            }
+            print("Qual index deseja remover");
+            int index = int.parse(stdin.readLineSync()!);
+            cadastramentoMacaco.remove(index);
+            print(cadastramentoMacaco);
+          break;
+
+          case 'Gato':
+
+          print('--------------------------------');
+
+            Tom.exibirInformacoes();
+
+            Tom.exibirSom();
+
+            Tom.alimentacao();
+
+            Tom.doenca();
+
+            Tom.porteAnimal();
+
+            for(int i= 0; i < cadastramentoGato.length; i++){
+              print("$i $cadastramentoGato[i]");
+            }
+            print("Qual index deseja remover");
+            int index = int.parse(stdin.readLineSync()!);
+            cadastramentoGato.remove(index);
+            print(cadastramentoGato);          
+
       default:
         print('Opção Inválido, escolhe corretamente as opções: 1, 2, 3 e 4');
+        }
     }
   }
 }
+
+
